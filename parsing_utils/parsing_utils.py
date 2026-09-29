@@ -1,4 +1,4 @@
-from ..constants.config_contents import CONFIG_CONTENTS
+from constants.config_contents import CONFIG_CONTENTS
 import typing
 import sys
 
@@ -14,7 +14,7 @@ def validate_argument_count() -> bool:
     return True
 
 
-def read_config(file_name: str) -> dict:
+def read_config() -> dict:
     """Read the configuration file and store its values in a dictionary.
 
     Args:
@@ -26,7 +26,7 @@ def read_config(file_name: str) -> dict:
 
     maze_config = {}
 
-    with open(file_name, "r") as file:
+    with open(sys.argv[1], "r") as file:
         for line in file:
             line = line.strip()
 
@@ -81,8 +81,9 @@ def convert_values(contents: dict[str, typing.Any]) -> dict[str, typing.Any]:
     return converted_config
 
 
-def parse_config(file_name: str) -> dict[str, typing.Any]:
-    config = read_config(file_name)
+def parse_config() -> dict[str, typing.Any]:
+    validate_argument_count()
+    config = read_config()
     config = convert_values(config)
     validate_config_contents(config)
 
