@@ -1,8 +1,8 @@
-CONFIG_CONTENTS = [
-    "WIDTH",
-    "HEIGHT",
-    "ENTRY",
-    "EXIT",
-    "OUTPUT_FILE",
-    "PERFECT"
-]
+CONFIG_CONTENTS = {
+    "WIDTH": int,
+    "HEIGHT": int,
+    "ENTRY": float,
+    "EXIT": float,
+    "OUTPUT_FILE": str,
+    "PERFECT": bool
+}
