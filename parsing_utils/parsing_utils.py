@@ -4,9 +4,6 @@ import sys
 
 
 def validate_config_contents(contents: dict[str, typing.Any]) -> None:
-    #check duplicate
-    #check whether keys match
-    #chheck whether values match
 
     for key, value in contents.items():
         if key not in CONFIG_CONTENTS:
@@ -15,11 +12,6 @@ def validate_config_contents(contents: dict[str, typing.Any]) -> None:
         if not isinstance(value, CONFIG_CONTENTS[key]):
             raise ValueError(f"Invalid value for {key}")
 
-
-
-    
-
-    
 
 def validate_argument_count() -> bool:
     """Check whether there are 2 arguments, including program name"""
@@ -52,6 +44,10 @@ def read_config(file_name: str) -> dict:
                 continue
 
             key, value = line.split("=", 1)
+
+            if key in maze_config:
+                raise ValueError(f"Duplicate item in config: {key}")
+            
             maze_config[key] = value
 
     return maze_config
