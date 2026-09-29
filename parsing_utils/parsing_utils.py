@@ -50,14 +50,10 @@ def validate_config_keys(contents: dict[str, typing.Any]) -> None:
             raise ValueError(f"Invalid key in config: {key}")
 
 
-def validate_config_contents(contents: dict[str, typing.Any]) -> None:
-
+def validate_config_values(contents: dict[str, typing.Any]) -> None:
     for key, value in contents.items():
-        if key not in CONFIG_CONTENTS:
-            raise ValueError(f"Invalid key in config {key}")
-
         if not isinstance(value, CONFIG_CONTENTS[key]):
-            raise ValueError(f"Invalid value for {key}")
+            raise ValueError(f"Invalid value")
 
 
 def convert_values(contents: dict[str, typing.Any]) -> dict[str, typing.Any]:
@@ -70,7 +66,7 @@ def convert_values(contents: dict[str, typing.Any]) -> dict[str, typing.Any]:
         if key == "ENTRY" or key == "EXIT":
             converted_config[key] = tuple(int(x) for x in value.split(","))
 
-        if key == "OUTPUT_FILE":
+        if key == "OUTPUT_FILE":            
             converted_config[key] = value
         
         if key == "PERFECT":
@@ -94,7 +90,7 @@ def parse_config() -> dict[str, typing.Any]:
         config = read_config()
         validate_config_keys(config)
         config = convert_values(config)
-        validate_config_contents(config)
+        validate_config_values(config)
 
         return config
     
