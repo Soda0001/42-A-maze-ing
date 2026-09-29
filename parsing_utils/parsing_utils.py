@@ -79,3 +79,11 @@ def convert_values(contents: dict[str, typing.Any]) -> dict[str, typing.Any]:
                 ) 
 
     return converted_config
+
+
+def parse_config(file_name: str) -> dict[str, typing.Any]:
+    config = read_config(file_name)
+    config = convert_values(config)
+    validate_config_contents(config)
+
+    return config
