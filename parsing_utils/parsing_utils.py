@@ -3,16 +3,6 @@ import typing
 import sys
 
 
-def validate_config_contents(contents: dict[str, typing.Any]) -> None:
-
-    for key, value in contents.items():
-        if key not in CONFIG_CONTENTS:
-            raise ValueError(f"Invalid key in config {key}")
-
-        if not isinstance(value, CONFIG_CONTENTS[key]):
-            raise ValueError(f"Invalid value for {key}")
-
-
 def validate_argument_count() -> bool:
     """Check whether there are 2 arguments, including program name"""
 
@@ -51,3 +41,41 @@ def read_config(file_name: str) -> dict:
             maze_config[key] = value
 
     return maze_config
+
+
+def validate_config_contents(contents: dict[str, typing.Any]) -> None:
+
+    for key, value in contents.items():
+        if key not in CONFIG_CONTENTS:
+            raise ValueError(f"Invalid key in config {key}")
+
+        if not isinstance(value, CONFIG_CONTENTS[key]):
+            raise ValueError(f"Invalid value for {key}")
+
+
+def convert_values(contents: dict[str, typing.Any]) -> dict[str, typing.Any]:
+    converted_config = {}
+
+    for key, value in contents.items():
+        if key == "WIDTH" or key == "HEIGHT":
+            converted_config[key] = int(value)
+
+        if key == "ENTRY" or key == "EXIT":
+            converted_config[key] = tuple(int(x) for x in value.split(","))
+
+        if key == "OUTPUT_FILE":
+            converted_config[key] = value
+        
+        if key == "PERFECT":
+            if value.lower() == "true":
+                converted_config[key] = True
+
+            elif value.lower() == "false":
+                converted_config[key] = False
+
+            else:
+                raise ValueError(
+                    "Invalid value in config - invalid type for boolean"
+                ) 
+
+    return converted_config
