@@ -1,5 +1,25 @@
+from ..constants.config_contents import CONFIG_CONTENTS
+import typing
 import sys
 
+
+def validate_config_contents(contents: dict[str, typing.Any]) -> None:
+    #check duplicate
+    #check whether keys match
+    #chheck whether values match
+
+    for key, value in contents.items():
+        if key not in CONFIG_CONTENTS:
+            raise ValueError(f"Invalid key in config {key}")
+
+        if not isinstance(value, CONFIG_CONTENTS[key]):
+            raise ValueError(f"Invalid value for {key}")
+
+
+
+    
+
+    
 
 def validate_argument_count() -> bool:
     """Check whether there are 2 arguments, including program name"""
@@ -31,7 +51,7 @@ def read_config(file_name: str) -> dict:
             if not line or line.startswith("#"):
                 continue
 
-            key, value = line.split("=")
+            key, value = line.split("=", 1)
             maze_config[key] = value
 
     return maze_config
