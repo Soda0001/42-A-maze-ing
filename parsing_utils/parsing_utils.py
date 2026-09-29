@@ -3,15 +3,14 @@ import typing
 import sys
 
 
-def validate_argument_count() -> bool:
+def validate_argument_count() -> None:
     """Check whether there are 2 arguments, including program name"""
 
     if len(sys.argv) != 2:
-        print("Invalid usage, expected usage is:")
-        print("./a-maze-ing config.txt")
-        return False
-
-    return True
+        raise ValueError(
+            "Invalid usage - Expected usage is:"
+            "./a-maze-ing config.txt"
+        )
 
 
 def read_config() -> dict:
