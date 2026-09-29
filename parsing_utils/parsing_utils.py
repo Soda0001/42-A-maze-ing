@@ -13,9 +13,13 @@ def validate_argument_count() -> bool:
 
 
 def read_config(file_name: str) -> dict:
-    """
-    Reads the config.txt and gathers required information
-    inside a dict
+    """Read the configuration file and store its values in a dictionary.
+
+    Args:
+        file_name: Name of the configuration file to read.
+
+    Returns:
+        A dictionary containing the configuration keys and values.
     """
 
     maze_config = {}
@@ -27,8 +31,7 @@ def read_config(file_name: str) -> dict:
             if not line or line.startswith("#"):
                 continue
 
-            key, value = line.split("=", 1)
+            key, value = line.split("=")
             maze_config[key] = value
 
     return maze_config
-            
