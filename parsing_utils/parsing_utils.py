@@ -13,7 +13,7 @@ def validate_argument_count() -> None:
         )
 
 
-def read_config() -> dict:
+def read_config() -> dict[str, str]:
     """Read the configuration file and store its values in a dictionary.
 
     Args:
@@ -40,6 +40,14 @@ def read_config() -> dict:
             maze_config[key] = value
 
     return maze_config
+
+
+def validate_config_keys(contents: dict[str, typing.Any]) -> None:
+    """Validate that all configuration keys are recognized."""
+
+    for key in contents:
+        if key not in CONFIG_CONTENTS:
+            raise ValueError(f"Invalid key in config: {key}")
 
 
 def validate_config_contents(contents: dict[str, typing.Any]) -> None:
@@ -83,7 +91,9 @@ def convert_values(contents: dict[str, typing.Any]) -> dict[str, typing.Any]:
 def parse_config() -> dict[str, typing.Any]:
     try:
         validate_argument_count()
-        config = convert_values(read_config())
+        config = read_config()
+        validate_config_keys(config)
+        config = convert_values(config)
         validate_config_contents(config)
 
         return config
