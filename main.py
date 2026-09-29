@@ -1,5 +1,6 @@
 from parsing_utils.parsing_utils import parse_config
 
+
 def main():
     config = parse_config()
     print(config)
