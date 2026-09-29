@@ -46,6 +46,21 @@ def read_config() -> dict[str, str]:
     return maze_config
 
 
+def validate_mandatory_keys(contents: dict[str, str]) -> None:
+    """Validate that all required configuration keys are present.
+
+    Args:
+        contents: Configuration data containing string values.
+
+    Raises:
+        ValueError: If a required configuration key is missing.
+    """
+
+    for key in CONFIG_CONTENTS:
+        if key not in contents:
+            raise ValueError(f"Missing mandatory item {key}")
+
+
 def validate_config_keys(contents: dict[str, str]) -> None:
     """Validate that all configuration keys are recognized.
 
@@ -130,6 +145,7 @@ def parse_config() -> dict[str, typing.Any]:
         validate_argument_count()
         config = read_config()
         validate_config_keys(config)
+        validate_mandatory_keys(config)
         config = convert_values(config)
         validate_config_values(config)
 
