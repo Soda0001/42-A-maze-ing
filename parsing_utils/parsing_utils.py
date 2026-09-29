@@ -81,9 +81,13 @@ def convert_values(contents: dict[str, typing.Any]) -> dict[str, typing.Any]:
 
 
 def parse_config() -> dict[str, typing.Any]:
-    validate_argument_count()
-    config = read_config()
-    config = convert_values(config)
-    validate_config_contents(config)
+    try:
+        validate_argument_count()
+        config = convert_values(read_config())
+        validate_config_contents(config)
 
-    return config
+        return config
+    
+    except ValueError as e:
+        print(e)
+        return {}
