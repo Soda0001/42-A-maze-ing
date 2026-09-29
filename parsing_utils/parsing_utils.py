@@ -104,7 +104,7 @@ def convert_values(contents: dict[str, str]) -> dict[str, typing.Any]:
         ValueError: If a boolean value is invalid.
     """
 
-    converted_config = {}
+    converted_config: dict[str, typing.Any] = {}
 
     for key, value in contents.items():
         if key == "WIDTH" or key == "HEIGHT":
