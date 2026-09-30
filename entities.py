@@ -1,0 +1,2 @@
+class Selçuk:
+    pass
