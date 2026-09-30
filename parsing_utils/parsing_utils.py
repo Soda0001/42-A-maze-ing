@@ -3,14 +3,14 @@ import sys
 import typing
 
 
-def validate_file() -> None:
-    """Validate that the input file has a .txt extension.
+# def validate_file() -> None:
+#     """Validate that the input file has a .txt extension.
 
-    Raises:
-        OSError: If the input file does not have a .txt extension.
-    """
-    if not sys.argv[1].endswith(".txt"):
-        raise OSError("[Errno 2] No such file or directory:")
+#     Raises:
+#         OSError: If the input file does not have a .txt extension.
+#     """
+#     if not sys.argv[1].endswith(".txt"):
+#         raise OSError("[Errno 2] No such file or directory:")
 
 
 def validate_argument_count() -> None:
