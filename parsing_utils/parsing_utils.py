@@ -3,6 +3,11 @@ import sys
 import typing
 
 
+def validate_file():
+    if not sys.argv[1].endswith(".txt"):
+        raise OSError("[Errno 2] No such file or directory:")
+
+
 def validate_argument_count() -> None:
     """Validate that exactly one command-line argument is provided.
 
@@ -13,7 +18,7 @@ def validate_argument_count() -> None:
     if len(sys.argv) != 2:
         raise ValueError(
             "Invalid usage - Expected usage is: "
-            "./a-maze-ing config.txt"
+            "python3 a-maze-ing config.txt"
         )
 
 
@@ -28,22 +33,25 @@ def read_config() -> dict[str, str]:
     """
 
     maze_config = {}
+    try:
+        with open(sys.argv[1], "r") as file:
+            for line in file:
+                line = line.strip()
 
-    with open(sys.argv[1], "r") as file:
-        for line in file:
-            line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
 
-            if not line or line.startswith("#"):
-                continue
+                key, value = line.split("=", 1)
 
-            key, value = line.split("=", 1)
+                if key in maze_config:
+                    raise ValueError(f"Duplicate item in config: {key}")
 
-            if key in maze_config:
-                raise ValueError(f"Duplicate item in config: {key}")
+                maze_config[key] = value
 
-            maze_config[key] = value
-
-    return maze_config
+        return maze_config
+    
+    except OSError as e:
+        print(f"Invalid file - {e}")
 
 
 def validate_mandatory_keys(contents: dict[str, str]) -> None:
@@ -142,6 +150,7 @@ def parse_config() -> dict[str, typing.Any]:
     """
 
     try:
+        validate_file()
         validate_argument_count()
         config = read_config()
         validate_config_keys(config)
@@ -151,6 +160,7 @@ def parse_config() -> dict[str, typing.Any]:
 
         return config
 
-    except ValueError as e:
+    except (ValueError, OSError) as e:
         print(e)
         return {}
+
