@@ -3,14 +3,14 @@ import sys
 import typing
 
 
-# def validate_file() -> None:
-#     """Validate that the input file has a .txt extension.
-
-#     Raises:
-#         OSError: If the input file does not have a .txt extension.
-#     """
-#     if not sys.argv[1].endswith(".txt"):
-#         raise OSError("[Errno 2] No such file or directory:")
+def validate_file() -> None:
+    """Validate that the input file has a .txt extension.
+    
+    Raises:
+        OSError: If the input file does not have a .txt extension.
+    """
+    if not sys.argv[1].endswith(".txt"):
+        raise OSError("[Errno 2] No such file or directory:")
 
 
 def validate_argument_count() -> None:
@@ -124,7 +124,17 @@ def convert_values(contents: dict[str, str]) -> dict[str, typing.Any]:
             converted_config[key] = int(value)
 
         if key == "ENTRY" or key == "EXIT":
-            converted_config[key] = tuple(int(x) for x in value.split(","))
+            try:
+                x, y = contents[key].split(",", 1)
+                try:
+                    x = int(x)
+                    y = int(y)
+                    converted_config[key] = x, y
+                except (AttributeError, ValueError, TypeError):
+                    raise
+
+            except ValueError:
+                raise
 
         if key == "OUTPUT_FILE":
             converted_config[key] = value
