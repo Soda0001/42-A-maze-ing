@@ -77,8 +77,8 @@ class Maze:
             self,
             all_neighbours: list[Cell]
     ) -> list[Cell]:
+        
         unvisited_neighbours = []
-
         for neighbour in all_neighbours:
             if not neighbour.is_visited():
                 unvisited_neighbours.append(neighbour)

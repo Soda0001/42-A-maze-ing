@@ -1,4 +1,4 @@
-# Initializing of maze
+# Initializing maze
 WIDTH=20
 HEIGHT=24
 ENTRY=00,00
