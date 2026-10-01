@@ -27,17 +27,30 @@ class Maze:
     def get_row(self):
         return self._row
 
-    def get_neighbours(self, cell: Cell) -> list:
+    def get_all_neighbours(self, cell: Cell) -> list[Cell]:
         neighbours = []
+        row = cell.get_row()
+        column = cell.get_column()
 
-        if cell.get_y() > 0:
-            neighbours.append((cell.get_x(), cell.get_y() + 1))
+        if row > 0:
+            neighbours.append(self._cells[row - 1][column])
 
-        if cell.get_y() < self.get_row() - 1:
-            neighbours.append((cell.get_x(), cell.get_y() - 1))
+        if row < self._row - 1:
+            neighbours.append(self._cells[row + 1][column])
 
-        if cell.get_x() > 0:
-                    neighbours.append((cell.get_x() - 1, cell.get_y()))
-        
-        if cell.get_x() < self.get_row() - 1:
-            neighbours.append((cell.get_x() + 1, cell.get_y()))
+        if column > 0:
+            neighbours.append(self._cells[row][column - 1])
+
+        if column < self._column - 1:
+            neighbours.append(self._cells[row][column + 1])
+
+        return neighbours
+
+    def get_unvisited_neighbours(self, all_neighbours: list) -> list[Cell]:
+        unvisited_neighbours = []
+
+        for neighbour in all_neighbours:
+            if not neighbour.is_visited:
+                unvisited_neighbours.append(neighbour)
+
+        return unvisited_neighbours
