@@ -1,51 +1,54 @@
 class Cell:
-    def __init__(self, x: int, y: int):
-        self._x = x
-        self._y = y
-        self._w = True
-        self._s = True
-        self._e = True
-        self._n = True
+    def __init__(self, row: int, column: int):
+        self._row = row
+        self._column = column
+        self._west = True
+        self._south = True
+        self._east = True
+        self._north = True
         self._is_visited = False
 
-    def get_x(self) -> int:
-        return self._x
+    def get_row(self) -> int:
+        return self._row
 
-    def set_x(self, x: int) -> None:
-        self._x = x
+    def set_row(self, row: int) -> None:
+        self._row = row
 
-    def get_y(self) -> int:
-        return self._y
+    def get_column(self) -> int:
+        return self._column
 
-    def set_y(self, y: int) -> None:
-        self._y = y
+    def set_column(self, column: int) -> None:
+        self._column = column
 
-    def get_w(self) -> bool:
-        return self._w
+    def get_west(self) -> bool:
+        return self._west
 
-    def set_w(self, w: bool) -> None:
-        self._w = w
+    def set_west(self, west: bool) -> None:
+        self._west = west
 
-    def get_s(self) -> bool:
-        return self._s
+    def get_south(self) -> bool:
+        return self._south
 
-    def set_s(self, s: bool) -> None:
-        self._s = s
+    def set_south(self, south: bool) -> None:
+        self._south = south
 
-    def get_e(self) -> bool:
-        return self._e
+    def get_east(self) -> bool:
+        return self._east
 
-    def set_e(self, e: bool) -> None:
-        self._e = e
+    def set_east(self, east: bool) -> None:
+        self._east = east
 
-    def get_n(self) -> bool:
-        return self._n
+    def get_north(self) -> bool:
+        return self._north
 
-    def set_n(self, n: bool) -> None:
-        self._n = n
+    def set_north(self, north: bool) -> None:
+        self._north = north
 
     def is_visited(self) -> bool:
         return self._is_visited
 
     def set_is_visited(self, is_visited: bool) -> None:
         self._is_visited = is_visited
+
+    def get_coordinates(self) -> tuple[int, int]:
+        return self.get_row(), self.get_column()
