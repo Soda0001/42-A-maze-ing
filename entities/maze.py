@@ -60,16 +60,16 @@ class Maze:
         column = cell.get_column()
 
         if row > 0:
-            neighbours.append(self._cells[row - 1][column])
+            neighbours.append(self.get_cells()[row - 1][column])
 
         if row < self.get_row() - 1:
-            neighbours.append(self._cells[row + 1][column])
+            neighbours.append(self.get_cells()[row + 1][column])
 
         if column > 0:
-            neighbours.append(self._cells[row][column - 1])
+            neighbours.append(self.get_cells()[row][column - 1])
 
         if column < self.get_column() - 1:
-            neighbours.append(self._cells[row][column + 1])
+            neighbours.append(self.get_cells()[row][column + 1])
 
         return neighbours
 
