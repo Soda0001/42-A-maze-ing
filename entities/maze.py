@@ -23,4 +23,21 @@ class Maze:
                 cell_row.append(cell)
 
             self._cells.append(cell_row)
-    
+
+    def get_row(self):
+        return self._row
+
+    def get_neighbours(self, cell: Cell) -> list:
+        neighbours = []
+
+        if cell.get_y() > 0:
+            neighbours.append((cell.get_x(), cell.get_y() + 1))
+
+        if cell.get_y() < self.get_row() - 1:
+            neighbours.append((cell.get_x(), cell.get_y() - 1))
+
+        if cell.get_x() > 0:
+                    neighbours.append((cell.get_x() - 1, cell.get_y()))
+        
+        if cell.get_x() < self.get_row() - 1:
+            neighbours.append((cell.get_x() + 1, cell.get_y()))
