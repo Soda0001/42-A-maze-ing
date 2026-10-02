@@ -5,13 +5,26 @@ from entities.cell import Cell
 
 
 class MazeGenerator:
+    """Generate mazes using the Hunt and Kill algorithm."""
+
     def __init__(
             self,
             seed: int | None = None
     ):
+        """Initialize the maze generator.
+
+        Args:
+            seed: Optional seed for reproducible maze generation.
+        """
         self._random = random.Random(seed)
 
     def carve_path(self, current_cell: Cell, next_cell: Cell) -> None:
+        """Carve a passage between two adjacent cells.
+
+        Args:
+            current_cell: The current cell.
+            next_cell: The adjacent cell to connect to the current cell.
+        """
         current_row = current_cell.get_row()
         current_column = current_cell.get_column()
 
@@ -45,7 +58,16 @@ class MazeGenerator:
             maze: Maze,
             look_at: tuple[int, int] = (0, 0)
     ) -> Cell | None:
+        """Find an unvisited cell with a visited neighbour.
 
+        Args:
+            maze: The maze to search.
+            look_at: The row and column from which to start the search.
+
+        Returns:
+            An unvisited cell with a visited neighbour, or None if no
+            suitable cell is found.
+        """
         rows = maze.get_cells()
 
         for row in range(look_at[0], len(rows)):
@@ -64,7 +86,11 @@ class MazeGenerator:
         return None
 
     def generate_maze(self, maze: Maze):
+        """Generate a maze using the Hunt and Kill algorithm.
 
+        Args:
+            maze: The maze to generate.
+        """
         while True:
             unvisited_cell = self.get_unvis_cell_with_vis_neighbour(maze)
 
