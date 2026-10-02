@@ -132,6 +132,9 @@ def would_create_3x3(
     neighbour: Cell
 ) -> bool:
     """Check if opening the wall creates a 3x3 open area."""
+    row = cell.get_row()
+    column = cell.get_column()
+
     open_wall(cell, neighbour)
 
     for start_row in range(row - 2, row + 1):
@@ -141,7 +144,7 @@ def would_create_3x3(
                 continue
             if start_row + 2 >= maze.get_row():
                 continue
-            if start_column +2 >= maze.get_column():
+            if start_column + 2 >= maze.get_column():
                 continue
 
             open_area = True
@@ -152,7 +155,10 @@ def would_create_3x3(
                         open_area = False
                         break
                 if not open_area:
-                    continue
+                    break
+
+            if not open_area:
+                continue
 
             for r in range(start_row, start_row +2):
                 for c in range(start_column, start_column + 3):
@@ -165,7 +171,9 @@ def would_create_3x3(
             if open_area:
                 close_wall(cell, neighbour)
                 return True
-    return True
+
+    close_wall(cell, neighbour)
+    return False
 
 
 def make_pacman_maze(
@@ -197,4 +205,4 @@ def make_pacman_maze(
                 continue
 
             open_wall(cell, neighbour)
-
+            break
