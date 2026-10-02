@@ -7,7 +7,7 @@ class Cell:
         self._east = True
         self._north = True
         self._is_visited = False
-        self._representation = "F"
+        self._representation = "f"
 
     def get_row(self) -> int:
         return self._row
@@ -70,6 +70,6 @@ class Cell:
 
         bits: str = f"{int(west)}{int(south)}{int(east)}{int(north)}"
         value = int(bits, 2)
-        character = format(value, "X")
+        character = format(value, "x")
 
         self.set_representation(character)
