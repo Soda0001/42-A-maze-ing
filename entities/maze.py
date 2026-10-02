@@ -92,7 +92,7 @@ class Maze:
 
         visited_neighbours = []
         for neighbour in all_neighbours:
-            if neighbour.is_visited()
+            if neighbour.is_visited():
                 visited_neighbours.append(neighbour)
 
         return visited_neighbours
