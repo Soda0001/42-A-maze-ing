@@ -52,3 +52,16 @@ class Cell:
 
     def get_coordinates(self) -> tuple[int, int]:
         return self.get_row(), self.get_column()
+
+def represent(self) -> str:
+    """Convert wall states into a hexadecimal character."""
+
+    west = self.get_west()
+    south = self.get_south()
+    east = self.get_east()
+    north = self.get_north()
+
+    bits: str = f"{int(west)}{int(south)}{int(east)}{int(north)}"
+    value = int(bits, 2)
+
+    return format(value, "X")
