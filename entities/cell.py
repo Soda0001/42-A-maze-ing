@@ -7,6 +7,7 @@ class Cell:
         self._east = True
         self._north = True
         self._is_visited = False
+        self._representation = "F"
 
     def get_row(self) -> int:
         return self._row
@@ -53,15 +54,22 @@ class Cell:
     def get_coordinates(self) -> tuple[int, int]:
         return self.get_row(), self.get_column()
 
-def represent(self) -> str:
-    """Convert wall states into a hexadecimal character."""
+    def get_representation(self) -> str:
+        return self._representation
 
-    west = self.get_west()
-    south = self.get_south()
-    east = self.get_east()
-    north = self.get_north()
+    def set_representation(self, representation: str) -> None:
+        self._representation = representation
 
-    bits: str = f"{int(west)}{int(south)}{int(east)}{int(north)}"
-    value = int(bits, 2)
+    def represent(self) -> None:
+        """Convert wall states into a hexadecimal character."""
 
-    return format(value, "X")
+        west = self.get_west()
+        south = self.get_south()
+        east = self.get_east()
+        north = self.get_north()
+
+        bits: str = f"{int(west)}{int(south)}{int(east)}{int(north)}"
+        value = int(bits, 2)
+        character = format(value, "X")
+
+        self.set_representation(character)
