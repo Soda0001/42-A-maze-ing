@@ -5,7 +5,7 @@ import typing
 
 def validate_file() -> None:
     """Validate that the input file has a .txt extension.
-    
+
     Raises:
         OSError: If the input file does not have a .txt extension.
     """
@@ -54,9 +54,9 @@ def read_config() -> dict[str, str]:
                 maze_config[key] = value
 
         return maze_config
-    
+
     except OSError as e:
-        print(f"Invalid file - {e}")
+        raise OSError(f"Invalid file - {e}") from e
 
 
 def validate_mandatory_keys(contents: dict[str, str]) -> None:
@@ -114,38 +114,27 @@ def convert_values(contents: dict[str, str]) -> dict[str, typing.Any]:
         A dictionary containing converted configuration values.
 
     Raises:
-        ValueError: If a boolean value is invalid.
+        ValueError: If a configuration value is invalid.
     """
 
     converted_config: dict[str, typing.Any] = {}
 
     for key, value in contents.items():
-        if key == "WIDTH" or key == "HEIGHT":
+        if key in ("WIDTH", "HEIGHT"):
             converted_config[key] = int(value)
 
-        if key == "ENTRY" or key == "EXIT":
-            try:
-                x, y = contents[key].split(",", 1)
-                try:
-                    x = int(x)
-                    y = int(y)
-                    converted_config[key] = x, y
-                except (AttributeError, ValueError, TypeError):
-                    raise
+        elif key in ("ENTRY", "EXIT"):
+            x, y = value.split(",", 1)
+            converted_config[key] = int(x), int(y)
 
-            except ValueError:
-                raise
-
-        if key == "OUTPUT_FILE":
+        elif key == "OUTPUT_FILE":
             converted_config[key] = value
 
-        if key == "PERFECT":
+        elif key == "PERFECT":
             if value.lower() == "true":
                 converted_config[key] = True
-
             elif value.lower() == "false":
                 converted_config[key] = False
-
             else:
                 raise ValueError(
                     "Invalid value in config - invalid type for boolean"
@@ -178,4 +167,3 @@ def parse_config() -> dict[str, typing.Any]:
     except (ValueError, OSError) as e:
         print(e)
         return {}
-
