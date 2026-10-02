@@ -40,12 +40,12 @@ class MazeGenerator:
         current_cell.represent()
         next_cell.represent()
 
-    def get_unvisited_cell_with_visited_neighbour(
+    def get_unvis_cell_with_vis_neighbour(
             self,
             maze: Maze,
             look_at: tuple[int, int] = (0, 0)
     ) -> Cell | None:
-        
+
         rows = maze.get_cells()
 
         for row in range(look_at[0], len(rows)):
@@ -55,50 +55,35 @@ class MazeGenerator:
                 if current_cell.is_visited():
                     continue
 
-                all_neighbours = maze.get_all_neighbours(current_cell)
-                visited_neighbours = maze.get_visited_neighbours(all_neighbours)
-                
+                neighbours = maze.get_all_neighbours(current_cell)
+                visited_neighbours = maze.get_visited_neighbours(neighbours)
+
                 if visited_neighbours:
                     return current_cell
 
         return None
 
     def generate_maze(self, maze: Maze):
-        """
-        HUNT & KILL ALGORITHM
-
-        * start from random cell (in our case entry)
-        * visit random unvisited cells
-        * after ran out of unvisited cells;
-        - start from top left to look for an unvisited cell with visited neighbour
-        * do it until all the cells are visited
-        * be careful not to visit 42 cells
-        """
-
-        entry_row, entry_column = maze.get_entry()
 
         while True:
+            unvisited_cell = self.get_unvis_cell_with_vis_neighbour(maze)
 
-            if not maze.get_cells()[entry_row][entry_column].is_visited():
-                current_cell = maze.get_cells()[entry_row][entry_column]
+            if not unvisited_cell:
+                break
 
-            else:
-                unvisited_cell = self.get_unvisited_cell_with_visited_neighbour(maze)
+            all_neighbours = maze.get_all_neighbours(unvisited_cell)
+            visited_neighbours = maze.get_visited_neighbours(all_neighbours)
 
-                if not unvisited_cell:
-                    break
+            visited_neighbour = self._random.choice(visited_neighbours)
+            self.carve_path(visited_neighbour, unvisited_cell)
 
-                all_neighbours = maze.get_all_neighbours(unvisited_cell)
-                visited_neighbours = maze.get_visited_neighbours(all_neighbours)
-
-                visited_neighbour = self._random.choice(visited_neighbours)
-                self.carve_path(visited_neighbour, unvisited_cell)
-
-                current_cell = unvisited_cell
+            current_cell = unvisited_cell
 
             while True:
                 all_neighbours = maze.get_all_neighbours(current_cell)
-                unvisited_neighbours = maze.get_unvisited_neighbours(all_neighbours)
+                unvisited_neighbours = maze.get_unvisited_neighbours(
+                    all_neighbours
+                )
 
                 if not unvisited_neighbours:
                     break
