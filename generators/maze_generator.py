@@ -14,8 +14,8 @@ class MazeGenerator:
     def generate_maze(self, maze: Maze):
         ...
 
-    def carve_path(current_cell: Cell, next_cell: Cell) -> None:
-        
+    def carve_path(self, current_cell: Cell, next_cell: Cell) -> None:
+
         current_row = current_cell.get_row()
         current_column = current_cell.get_column()
 
