@@ -1,7 +1,7 @@
 from entities.maze import Maze
 
 
-def find_dead_ends(maze: Maze) -> list[tuple[int, int ]]:
+def find_dead_ends(maze: Maze) -> list[tuple[int, int]]:
     """Return the coordinates of every dead-end cell (exactly 3 closed walls)."""
     dead_ends: list[tuple[int, int]] = []
     for row in maze.get_cells():
