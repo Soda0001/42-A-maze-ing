@@ -84,3 +84,15 @@ class Maze:
                 unvisited_neighbours.append(neighbour)
 
         return unvisited_neighbours
+
+    def get_visited_neighbours(
+            self,
+            all_neighbours: list[Cell]
+    ):
+
+        visited_neighbours = []
+        for neighbour in all_neighbours:
+            if neighbour.is_visited():
+                visited_neighbours.append(neighbour)
+
+        return visited_neighbours
