@@ -88,7 +88,7 @@ class Maze:
     def get_visited_neighbours(
             self,
             all_neighbours: list[Cell]
-    ):
+    ) -> list[Cell]:
 
         visited_neighbours = []
         for neighbour in all_neighbours:

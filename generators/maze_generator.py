@@ -85,7 +85,7 @@ class MazeGenerator:
 
         return None
 
-    def generate_maze(self, maze: Maze):
+    def generate_maze(self, maze: Maze) -> None:
         """Generate a maze using the Hunt and Kill algorithm.
 
         Args:

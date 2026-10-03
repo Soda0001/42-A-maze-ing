@@ -160,7 +160,7 @@ def would_create_3x3(
             if not open_area:
                 continue
 
-            for r in range(start_row, start_row +2):
+            for r in range(start_row, start_row + 2):
                 for c in range(start_column, start_column + 3):
                     if maze.get_cells()[r][c].get_south():
                         open_area = False
