@@ -49,30 +49,6 @@ def open_wall(cell: Cell, neighbour: Cell) -> None:
         neighbour.set_west(False)
 
 
-def is_protected_cell(maze: Maze, cell: Cell) -> bool:
-    """Check whether cell is a corner or the centre."""
-
-    row = cell.get_row()
-    column = cell.get_column()
-
-    last_row = maze.get_row() - 1
-    last_column = maze.get_column() - 1
-
-    corners = {
-        (0, 0),
-        (0, last_column),
-        (last_row, 0),
-        (last_row, last_column),
-    }
-
-    centre = (maze.get_row() // 2, maze.get_column() // 2)
-
-    return (
-        (row, column) in corners
-        or (row, column) == centre
-    )
-
-
 def get_closed_neighbours(
         maze: Maze,
         cell: Cell
@@ -191,14 +167,17 @@ def make_pacman_maze(
         row, column = coordinates
         cell = maze.get_cells()[row][column]
 
-        if is_protected_cell(maze, cell):
-            continue
-
         candidates = get_closed_neighbours(maze, cell)
         rng.shuffle(candidates)
 
         for neighbour in candidates:
-            if is_protected_cell(maze, neighbour):
+            closed = (
+                neighbour.get_north()
+                + neighbour.get_east()
+                + neighbour.get_south()
+                + neighbour.get_west()
+            )
+            if closed == 4:
                 continue
 
             if would_create_3x3(maze, cell, neighbour):
@@ -206,3 +185,7 @@ def make_pacman_maze(
 
             open_wall(cell, neighbour)
             break
+
+    for row in maze.get_cells():
+        for cell in row:
+            cell.represent()
