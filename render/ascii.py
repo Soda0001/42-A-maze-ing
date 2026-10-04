@@ -12,6 +12,7 @@ EXIT_COLOR = 196
 PATH_COLOR = 45
 PATTERN_COLOR = 244
 
+
 # Letter -> (row change, column change)
 STEP = {
     "N": (-1, 0),
@@ -19,6 +20,7 @@ STEP = {
     "S": (1, 0),
     "W": (0, -1),
 }
+
 
 MENU = (
     "=== A-Maze-ing ===\n"
@@ -34,6 +36,7 @@ def block(color: int | None) -> str:
     """Return one square block (2 characters wide)."""
     if color is None:
         return "  "
+
     return f"\033[48;5;{color}m  {RESET}"
 
 
