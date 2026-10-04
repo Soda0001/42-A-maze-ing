@@ -107,3 +107,17 @@ class Maze:
             representation += "\n"
 
         return representation
+
+    def write_to_file(self, filename: str) -> None:
+        """Write the maze and its entry and exit to a file."""
+        with open(filename, "w") as file:
+            for row in self.get_cells():
+                for cell in row:
+                    file.write(cell.get_representation())
+                file.write("\n")
+
+            entry_row, entry_column = self.get_entry()
+            exit_row, exit_column = self.get_exit()
+
+            file.write(f"\n{entry_row},{entry_column}\n")
+            file.write(f"{exit_row},{exit_column}\n")
