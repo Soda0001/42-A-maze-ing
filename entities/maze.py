@@ -24,11 +24,9 @@ class Maze:
 
             self._cells.append(cell_row)
         self.mark_restricted_cells()
-        try:
-            self.validate_enter()
-            self.validate_exit()
-        except IndexError as e:
-            print(e)
+
+        self.validate_enter()
+        self.validate_exit()
 
     def get_row(self) -> int:
         return self._row
@@ -198,16 +196,22 @@ class Maze:
         entry_row_index, entry_column_index = self.get_entry()
 
         if entry_row_index < 0 or entry_row_index >= self.get_row():
-            raise IndexError("Entry must be inside of boundries of the maze")
+            raise IndexError("\n---Entry must be inside of boundries of the maze---")
 
         if entry_column_index < 0 or entry_column_index >= self.get_column():
-            raise IndexError("Entry must be inside of boundries of the maze")
+            raise IndexError("\n---Entry must be inside of boundries of the maze---")
+
+        if self.get_cells()[entry_row_index][entry_column_index].is_restricted():
+            raise ValueError("\n---Entry must be outside of '42' pattern")
 
     def validate_exit(self) -> None:
         exit_row_index, exit_column_index = self.get_exit()
 
         if exit_row_index < 0 or exit_row_index >= self.get_row():
-            raise IndexError("Exit must be inside of boundries of the maze")
+            raise IndexError("\n---Exit must be inside of boundries of the maze---")
 
         if exit_column_index < 0 or exit_column_index >= self.get_column():
-            raise IndexError("Exit must be inside of boundries of the maze")
+            raise IndexError("\n---Exit must be inside of boundries of the maze---")
+
+        if self.get_cells()[exit_row_index][exit_column_index].is_restricted():
+            raise ValueError("\n---Exit must be outside of '42' pattern")
