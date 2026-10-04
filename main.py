@@ -9,29 +9,36 @@ from render.ascii import render
 
 def create_random_maze(perfect: bool) -> Maze:
     """Create a random maze with valid entry and exit coordinates."""
-    width = random.randint(3, 50)
-    height = random.randint(3, 50)
+    while True:
+        width = random.randint(3, 50)
+        height = random.randint(3, 50)
 
-    entry = (
-        random.randint(0, height - 1),
-        random.randint(0, width - 1),
-    )
+        entry = (
+            random.randint(0, height - 1),
+            random.randint(0, width - 1),
+        )
 
-    exit = (
-        random.randint(0, height - 1),
-        random.randint(0, width - 1),
-    )
+        exit = (
+            random.randint(0, height - 1),
+            random.randint(0, width - 1),
+        )
 
-    maze = Maze(
-        height,
-        width,
-        entry,
-        exit,
-    )
+        if entry == exit:
+            continue
 
-    MazeGenerator().generate_maze(maze, perfect)
+        try:
+            maze = Maze(
+                height,
+                width,
+                entry,
+                exit,
+            )
+            MazeGenerator().generate_maze(maze, perfect)
 
-    return maze
+        except (IndexError, ValueError):
+            continue
+
+        return maze
 
 
 def main() -> None:
@@ -65,7 +72,7 @@ def main() -> None:
             choice = input(
                 "\n=== A-maze-ing ==="
                 "\n1. Regenerate a new random maze"
-                "\n2. Regenerate a new pacman maze"
+                "\n2. Turn into pacman maze"
                 "\n3. Show / Hide the shortest path"
                 "\n4. Rotate the wall colours"
                 "\n5. Quit"
