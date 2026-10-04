@@ -23,6 +23,12 @@ class Maze:
                 cell_row.append(cell)
 
             self._cells.append(cell_row)
+        self.mark_restricted_cells()
+        try:
+            self.validate_enter()
+            self.validate_exit()
+        except IndexError as e:
+            print(e)
 
     def get_row(self) -> int:
         return self._row
@@ -80,7 +86,7 @@ class Maze:
 
         unvisited_neighbours = []
         for neighbour in all_neighbours:
-            if not neighbour.is_visited():
+            if not neighbour.is_visited() and not neighbour.is_restricted():
                 unvisited_neighbours.append(neighbour)
 
         return unvisited_neighbours
@@ -103,7 +109,7 @@ class Maze:
 
         visited_neighbours = []
         for neighbour in all_neighbours:
-            if neighbour.is_visited():
+            if neighbour.is_visited() and not neighbour.is_restricted():
                 visited_neighbours.append(neighbour)
 
         return visited_neighbours
@@ -135,24 +141,18 @@ class Maze:
 
     def is_42pattern_eligible(self) -> bool:
 
-        if self.get_row() < 6 or self.get_column() < 7:
+        if self.get_row() < 5 or self.get_column() < 7:
             print("Too small to have '42' pattern")
             return False
         else:
             return True
 
     def get_mid_left_corner_coor(self) -> tuple[int, int]:
-        initial_mid_row = self.get_row()
-        initial_mid_column = self.get_column()
+        pattern_height = 5
+        pattern_width = 7
 
-        mid_row = initial_mid_row // 2
-        mid_column = initial_mid_column // 2
-
-        if initial_mid_column == 7:
-            mid_column = 0
-
-        if initial_mid_row == 5:
-            mid_row = 0
+        mid_row = (self.get_row() - pattern_height) // 2
+        mid_column = (self.get_column() - pattern_width) // 2
 
         return mid_row, mid_column
 
@@ -171,18 +171,43 @@ class Maze:
         cells[mid_row + 3][mid_column + 2].set_is_restricted(True)
         cells[mid_row + 4][mid_column + 2].set_is_restricted(True)
 
-        cells[mid_row + 4][mid_column + 6].set_is_restricted(True)
-        cells[mid_row + 4][mid_column + 5].set_is_restricted(True)
-        cells[mid_row + 3][mid_column + 4].set_is_restricted(True)
+        cells[mid_row][mid_column + 4].set_is_restricted(True)
+        cells[mid_row][mid_column + 5].set_is_restricted(True)
+        cells[mid_row][mid_column + 6].set_is_restricted(True)
+        cells[mid_row + 1][mid_column + 6].set_is_restricted(True)
         cells[mid_row + 2][mid_column + 4].set_is_restricted(True)
         cells[mid_row + 2][mid_column + 5].set_is_restricted(True)
         cells[mid_row + 2][mid_column + 6].set_is_restricted(True)
-        cells[mid_row + 1][mid_column + 6].set_is_restricted(True)
-        cells[mid_row][mid_column + 6].set_is_restricted(True)
-        cells[mid_row][mid_column + 5].set_is_restricted(True)
-        
-    def get_restricted_cells(self):
-        if not self.is_42pattern_eligible():
-            return
+        cells[mid_row + 3][mid_column + 4].set_is_restricted(True)
+        cells[mid_row + 4][mid_column + 4].set_is_restricted(True)
+        cells[mid_row + 4][mid_column + 5].set_is_restricted(True)
+        cells[mid_row + 4][mid_column + 6].set_is_restricted(True)
+            
+    def get_restricted_cells(self) -> list[Cell]:
+        """Return all restricted cells in the maze."""
+        restricted_cells: list[Cell] = []
 
-        pass
+        for row in self.get_cells():
+            for cell in row:
+                if cell.is_restricted():
+                    restricted_cells.append(cell)
+
+        return restricted_cells
+
+    def validate_enter(self):
+        entry_row_index, entry_column_index = self.get_entry()
+
+        if entry_row_index < 0 or entry_row_index > self.get_row():
+            raise IndexError("Entry must be inside of boundries of the maze")
+
+        if entry_column_index < 0 or entry_column_index > self.get_column():
+            raise IndexError("Entry must be inside of boundries of the maze")
+
+    def validate_exit(self):
+        exit_row_index, exit_column_index = self.get_exit()
+
+        if exit_row_index < 0 or exit_row_index > self.get_row():
+            raise IndexError("Exit must be inside of boundries of the maze")
+
+        if exit_column_index < 0 or exit_column_index > self.get_column():
+            raise IndexError("Exit must be inside of boundries of the maze")
