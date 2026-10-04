@@ -8,6 +8,7 @@ class Cell:
         self._north = True
         self._is_visited = False
         self._representation = "f"
+        self._is_restricted = False
 
     def get_row(self) -> int:
         return self._row
@@ -59,6 +60,12 @@ class Cell:
 
     def set_representation(self, representation: str) -> None:
         self._representation = representation
+
+    def is_restricted(self) -> int:
+        return self._is_restricted
+
+    def set_is_restricted(self, restriction: bool) -> None:
+        self._is_restricted = restriction
 
     def represent(self) -> None:
         """Convert wall states into a hexadecimal character."""
