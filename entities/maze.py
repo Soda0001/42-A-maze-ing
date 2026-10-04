@@ -121,3 +121,57 @@ class Maze:
 
             file.write(f"\n{entry_row},{entry_column}\n")
             file.write(f"{exit_row},{exit_column}\n")
+
+    def is_42pattern_eligible(self) -> bool:
+
+        if self.get_row() < 6 or self.get_column() < 7:
+            print("Too small to have '42' pattern")
+            return False
+        else:
+            return True
+
+    def get_mid_left_corner_coor(self) -> tuple[int, int]:
+        initial_mid_row = self.get_row()
+        initial_mid_column = self.get_column()
+
+        mid_row = initial_mid_row // 2
+        mid_column = initial_mid_column // 2
+
+        if initial_mid_column == 7:
+            mid_column = 0
+
+        if initial_mid_row == 5:
+            mid_row = 0
+
+        return mid_row, mid_column
+
+    def mark_restricted_cells(self) -> None:
+        if not self.is_42pattern_eligible():
+            return
+
+        mid_row, mid_column = self.get_mid_left_corner_coor()
+        cells = self.get_cells()
+
+        cells[mid_row][mid_column].set_is_restricted(True)
+        cells[mid_row + 1][mid_column].set_is_restricted(True)
+        cells[mid_row + 2][mid_column].set_is_restricted(True)
+        cells[mid_row + 2][mid_column + 1].set_is_restricted(True)
+        cells[mid_row + 2][mid_column + 2].set_is_restricted(True)
+        cells[mid_row + 3][mid_column + 2].set_is_restricted(True)
+        cells[mid_row + 4][mid_column + 2].set_is_restricted(True)
+
+        cells[mid_row + 4][mid_column + 6].set_is_restricted(True)
+        cells[mid_row + 4][mid_column + 5].set_is_restricted(True)
+        cells[mid_row + 3][mid_column + 4].set_is_restricted(True)
+        cells[mid_row + 2][mid_column + 4].set_is_restricted(True)
+        cells[mid_row + 2][mid_column + 5].set_is_restricted(True)
+        cells[mid_row + 2][mid_column + 6].set_is_restricted(True)
+        cells[mid_row + 1][mid_column + 6].set_is_restricted(True)
+        cells[mid_row][mid_column + 6].set_is_restricted(True)
+        cells[mid_row][mid_column + 5].set_is_restricted(True)
+        
+    def get_restricted_cells(self):
+        if not self.is_42pattern_eligible():
+            return
+
+        pass
