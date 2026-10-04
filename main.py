@@ -7,30 +7,46 @@ from render.ascii import render
 
 
 def create_random_maze(perfect: bool) -> Maze:
-    """Create a random maze with valid entry and exit coordinates."""
-    width = random.randint(3, 50)
-    height = random.randint(3, 50)
+    """Create a random maze with valid entry and exit cells."""
+    while True:
+        width = random.randint(3, 50)
+        height = random.randint(3, 50)
 
-    entry = (
-        random.randint(0, width - 1),
-        random.randint(0, height - 1),
-    )
+        entry = (
+            random.randint(0, height - 1),
+            random.randint(0, width - 1),
+        )
 
-    exit = (
-        random.randint(0, width - 1),
-        random.randint(0, height - 1),
-    )
+        exit = (
+            random.randint(0, height - 1),
+            random.randint(0, width - 1),
+        )
 
-    maze = Maze(
-        width,
-        height,
-        entry,
-        exit,
-    )
+        if entry == exit:
+            continue
 
-    MazeGenerator().generate_maze(maze, perfect)
+        maze = Maze(
+            height,
+            width,
+            entry,
+            exit,
+        )
 
-    return maze
+        MazeGenerator().generate_maze(maze, perfect)
+
+        entry_row, entry_column = entry
+        exit_row, exit_column = exit
+
+        entry_cell = maze.get_cells()[entry_row][entry_column]
+        exit_cell = maze.get_cells()[exit_row][exit_column]
+
+        if entry_cell.is_restricted():
+            continue
+
+        if exit_cell.is_restricted():
+            continue
+
+        return maze
 
 
 def main() -> None:
@@ -71,6 +87,6 @@ def main() -> None:
         elif choice == "3":
             break
 
-        
+
 if __name__ == "__main__":
     main()
