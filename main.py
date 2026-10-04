@@ -15,7 +15,7 @@ def main() -> None:
         config["EXIT"],
     )
 
-    maze_generator = MazeGenerator(seed=42)
+    maze_generator = MazeGenerator(seed=4)
     maze_generator.generate_maze(maze, config["PERFECT"])
 
     with open(config["OUTPUT_FILE"], "w") as file:
@@ -23,6 +23,12 @@ def main() -> None:
             for cell in row:
                 file.write(cell.get_representation())
             file.write("\n")
+
+        entry_row, entry_column = config["ENTRY"]
+        exit_row, exit_column = config["EXIT"]
+
+        file.write(f"\n{entry_row},{entry_column}\n")
+        file.write(f"{exit_row},{exit_column}\n")
 
 
 if __name__ == "__main__":
