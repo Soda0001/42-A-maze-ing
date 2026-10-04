@@ -162,6 +162,13 @@ def parse_config() -> dict[str, typing.Any]:
         config = convert_values(config)
         validate_config_values(config)
 
+        uppercase_config = {}
+        
+        for key, value in config.items():
+            uppercase_config[key.upper()] = value
+        
+        config = uppercase_config
+
         return config
 
     except (ValueError, OSError) as e:

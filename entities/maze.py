@@ -96,3 +96,14 @@ class Maze:
                 visited_neighbours.append(neighbour)
 
         return visited_neighbours
+
+    def get_representation(self) -> str:
+        """Return the maze representation as a string."""
+        representation = ""
+
+        for row in self._cells:
+            for cell in row:
+                representation += cell.get_representation()
+            representation += "\n"
+
+        return representation
