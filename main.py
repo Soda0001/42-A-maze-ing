@@ -32,8 +32,6 @@ def create_random_maze(perfect: bool) -> Maze:
             exit,
         )
 
-        MazeGenerator().generate_maze(maze, perfect)
-
         entry_row, entry_column = entry
         exit_row, exit_column = exit
 
@@ -45,6 +43,8 @@ def create_random_maze(perfect: bool) -> Maze:
 
         if exit_cell.is_restricted():
             continue
+
+        MazeGenerator().generate_maze(maze, perfect)
 
         return maze
 
