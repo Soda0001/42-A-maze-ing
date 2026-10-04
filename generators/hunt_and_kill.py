@@ -91,8 +91,8 @@ class HuntAndKill:
         Args:
             maze: The maze to generate.
         """
-        entry_x, entry_y = maze.get_entry()
-        entry_cell = maze.get_cells()[entry_x][entry_y]
+        entry_row, entry_column = maze.get_entry()
+        entry_cell = maze.get_cells()[entry_row][entry_column]
 
         restricted_cells = maze.get_restricted_cells()
         if entry_cell in restricted_cells:

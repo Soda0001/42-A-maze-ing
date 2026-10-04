@@ -13,13 +13,13 @@ def create_random_maze(perfect: bool) -> Maze:
     height = random.randint(3, 50)
 
     entry = (
-        random.randint(0, width - 1),
         random.randint(0, height - 1),
+        random.randint(0, width - 1),
     )
 
     exit = (
-        random.randint(0, width - 1),
         random.randint(0, height - 1),
+        random.randint(0, width - 1),
     )
 
     maze = Maze(

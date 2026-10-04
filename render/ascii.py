@@ -103,17 +103,17 @@ def build_tiles(
         if (row + 1, column) in pattern:
             tiles[2 * row + 2][2 * column + 1] = PATTERN_COLOR
 
-    # Entry and exit are stored as (x, y) = (column, row).
-    entry_x, entry_y = maze.get_entry()
-    exit_x, exit_y = maze.get_exit()
+    # Entry and exit are stored as (row, column).
+    entry_row, entry_column = maze.get_entry()
+    exit_row, exit_column = maze.get_exit()
 
     if show_path and path:
-        row = entry_y
-        column = entry_x
+        row = entry_row
+        column = entry_column
 
         if (
-            0 <= row < rows
-            and 0 <= column < cols
+            0 <= entry_row < rows
+            and 0 <= entry_column < cols
         ):
             tiles[2 * row + 1][2 * column + 1] = PATH_COLOR
 
@@ -145,16 +145,16 @@ def build_tiles(
 
     # Draw entry and exit only when their coordinates are valid.
     if (
-        0 <= entry_y < rows
-        and 0 <= entry_x < cols
+        0 <= entry_row < rows
+        and 0 <= entry_column < cols
     ):
-        tiles[2 * entry_y + 1][2 * entry_x + 1] = ENTRY_COLOR
+        tiles[2 * entry_row + 1][2 * entry_column + 1] = ENTRY_COLOR
 
     if (
-        0 <= exit_y < rows
-        and 0 <= exit_x < cols
+        0 <= exit_row < rows
+        and 0 <= exit_column < cols
     ):
-        tiles[2 * exit_y + 1][2 * exit_x + 1] = EXIT_COLOR
+        tiles[2 * exit_row + 1][2 * exit_column + 1] = EXIT_COLOR
 
     return tiles
 

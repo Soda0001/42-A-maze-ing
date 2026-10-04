@@ -197,17 +197,17 @@ class Maze:
     def validate_enter(self) -> None:
         entry_row_index, entry_column_index = self.get_entry()
 
-        if entry_row_index < 0 or entry_row_index > self.get_row():
+        if entry_row_index < 0 or entry_row_index >= self.get_row():
             raise IndexError("Entry must be inside of boundries of the maze")
 
-        if entry_column_index < 0 or entry_column_index > self.get_column():
+        if entry_column_index < 0 or entry_column_index >= self.get_column():
             raise IndexError("Entry must be inside of boundries of the maze")
 
     def validate_exit(self) -> None:
         exit_row_index, exit_column_index = self.get_exit()
 
-        if exit_row_index < 0 or exit_row_index > self.get_row():
+        if exit_row_index < 0 or exit_row_index >= self.get_row():
             raise IndexError("Exit must be inside of boundries of the maze")
 
-        if exit_column_index < 0 or exit_column_index > self.get_column():
+        if exit_column_index < 0 or exit_column_index >= self.get_column():
             raise IndexError("Exit must be inside of boundries of the maze")
