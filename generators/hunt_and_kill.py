@@ -74,7 +74,7 @@ class HuntAndKill:
             for column in range(look_at[1], len(rows[row])):
                 current_cell = maze.get_cells()[row][column]
 
-                if current_cell.is_visited():
+                if current_cell.is_visited() or current_cell._is_restricted():
                     continue
 
                 neighbours = maze.get_all_neighbours(current_cell)
@@ -96,10 +96,10 @@ class HuntAndKill:
         entry_cell.set_is_visited(True)
 
         while True:
-            unvisited_cell = self.get_unvis_cell_with_vis_neighbour(maze)
-
-            if not unvisited_cell:
+            if maze.get_unvisited_cell_count() == 18:
                 break
+            
+            unvisited_cell = self.get_unvis_cell_with_vis_neighbour(maze)
 
             all_neighbours = maze.get_all_neighbours(unvisited_cell)
             visited_neighbours = maze.get_visited_neighbours(all_neighbours)
