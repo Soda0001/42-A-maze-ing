@@ -27,13 +27,10 @@ class MazeGenerator:
 
         Args:
             maze: The maze to generate.
-            algorithm: The algorithm to use.
+            algorithm: True for Hunt & Kill, False for Pacman.
         """
-        if algorithm == True:
+        if algorithm:
             self._hunt_and_kill.generate_maze(maze)
-
-        elif algorithm == False:
-            self._pacman.generate_maze(maze)
-
         else:
-            raise ValueError(f"Unknown maze generation algorithm: {algorithm}")
+            self._hunt_and_kill.generate_maze(maze)
+            self._pacman.generate_maze(maze)
