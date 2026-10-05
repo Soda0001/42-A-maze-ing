@@ -67,16 +67,22 @@ class Cell:
     def set_is_restricted(self, restriction: bool) -> None:
         self._is_restricted = restriction
 
-    def represent(self) -> None:
-        """Convert wall states into a hexadecimal character."""
-
+    def get_bits(self) -> tuple[int, int, int, int]:
         west = self.get_west()
         south = self.get_south()
         east = self.get_east()
         north = self.get_north()
 
-        bits: str = f"{int(west)}{int(south)}{int(east)}{int(north)}"
-        value = int(bits, 2)
+        bits = int(west), int(south), int(east), int(north)
+        return bits
+
+    def represent(self) -> None:
+        """Convert wall states into a hexadecimal character."""
+
+        bits = self.get_bits()
+
+        bits_str = f"{bits[0]}{bits[1]}{bits[2]}{bits[3]}"
+        value = int(bits_str, 2)
         character = format(value, "x")
 
         self.set_representation(character)
