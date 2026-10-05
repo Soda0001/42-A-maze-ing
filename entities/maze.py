@@ -217,3 +217,11 @@ class Maze:
 
         if self.get_cells()[exit_row_index][exit_column_index].is_restricted():
             raise ValueError("Exit must be outside of '42' pattern")
+
+        exit_cell = self.get_cells()[exit_row_index][exit_column_index]
+
+        entry_row_index, entry_column_index = self.get_entry()
+        entry_cell = self.get_cells()[entry_row_index][entry_column_index]
+
+        if exit_cell == entry_cell:
+            raise ValueError("Entry and exit cannot be the same cell")
