@@ -51,12 +51,16 @@ def main() -> None:
     if not config:
         return None
 
-    maze = Maze(
-        config["HEIGHT"],
-        config["WIDTH"],
-        config["ENTRY"],
-        config["EXIT"],
-    )
+    try:
+        maze = Maze(
+            config["HEIGHT"],
+            config["WIDTH"],
+            config["ENTRY"],
+            config["EXIT"],
+        )
+    except (ValueError, IndexError) as error:
+        print(f"Invalid maze: {error}")
+        return
 
     maze_generator = MazeGenerator()
     maze_generator.generate_maze(maze, config["PERFECT"])
