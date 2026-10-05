@@ -76,6 +76,16 @@ class Cell:
         bits = int(west), int(south), int(east), int(north)
         return bits
 
+    def get_open_walls(self) -> list:
+        open_walls = []
+
+        walls = self.get_bits()
+        for wall in walls:
+            if wall == 0:
+                open_walls.append(wall)
+
+        return open_walls
+
     def represent(self) -> None:
         """Convert wall states into a hexadecimal character."""
 
