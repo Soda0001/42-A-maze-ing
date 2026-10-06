@@ -89,6 +89,14 @@ class Maze:
 
         return unvisited_neighbours
 
+    def get_unvisited_cells(self):
+        unvisited_cells = []
+
+        for row in self.get_cells():
+            for cell in row:
+                if not cell.is_visited():
+                    unvisited_cells.append(cell)
+
     def get_unvisited_cell_count(self) -> int:
         """Return the number of unvisited cells."""
         count = 0
