@@ -79,23 +79,41 @@ class Maze:
 
     def get_unvisited_neighbours(
             self,
-            all_neighbours: list[Cell]
+            cell: Cell
     ) -> list[Cell]:
-
         unvisited_neighbours = []
-        for neighbour in all_neighbours:
+
+        neighbours = self.get_all_neighbours(cell)
+
+        for neighbour in neighbours:
             if not neighbour.is_visited() and not neighbour.is_restricted():
                 unvisited_neighbours.append(neighbour)
 
         return unvisited_neighbours
+
+    def get_visited_neighbours(
+            self,
+            cell: Cell
+    ) -> list[Cell]:
+        visited_neighbours = []
+
+        neighbours = self.get_all_neighbours(cell)
+
+        for neighbour in neighbours:
+            if neighbour.is_visited():
+                visited_neighbours.append(neighbour)
+
+        return visited_neighbours
 
     def get_unvisited_cells(self):
         unvisited_cells = []
 
         for row in self.get_cells():
             for cell in row:
-                if not cell.is_visited():
+                if not cell.is_visited() and not cell.is_restricted():
                     unvisited_cells.append(cell)
+
+        return unvisited_cells
 
     def get_unvisited_cell_count(self) -> int:
         """Return the number of unvisited cells."""
@@ -107,18 +125,6 @@ class Maze:
                     count += 1
 
         return count
-
-    def get_visited_neighbours(
-            self,
-            all_neighbours: list[Cell]
-    ) -> list[Cell]:
-
-        visited_neighbours = []
-        for neighbour in all_neighbours:
-            if neighbour.is_visited() and not neighbour.is_restricted():
-                visited_neighbours.append(neighbour)
-
-        return visited_neighbours
 
     def get_representation(self) -> str:
         """Return the maze representation as a string."""
