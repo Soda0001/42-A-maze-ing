@@ -39,6 +39,15 @@ The project was developed collaboratively, with the code divided into independen
 
 ---
 
+## Bonus
+
+### Zero Dead Ends
+
+Our maze generator supports the generation of mazes with **0 dead ends**.
+
+The generator identifies dead-end cells and opens additional walls while preserving the maze structure, resulting in a maze without any dead-end cells.
+
+
 ## Instructions
 
 ### Requirements
