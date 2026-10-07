@@ -2,6 +2,7 @@ import random
 
 from entities.maze import Maze
 from entities.cell import Cell
+from generators.maze_braider import make_pacman_maze
 
 
 class HuntAndKill:
@@ -17,6 +18,7 @@ class HuntAndKill:
             seed: Optional seed for reproducible maze generation.
         """
         self._random = random.Random(seed)
+        self._seed = seed
 
     def carve_path(self, current_cell: Cell, next_cell: Cell) -> None:
         """Carve a passage between two adjacent cells.
@@ -128,7 +130,7 @@ class HuntAndKill:
 
             self.kill(maze, next_cell)
 
-    def generate_maze(self, maze: Maze) -> None:
+    def generate_maze(self, maze: Maze, perfect: bool = True) -> None:
         """Generate a maze using the Hunt and Kill algorithm.
 
         Args:
@@ -143,3 +145,6 @@ class HuntAndKill:
             current_cell = self._random.choice(unvisited_cells)
 
             self.hunt_and_kill(maze, current_cell)
+
+        if not perfect:
+            make_pacman_maze(maze, self._seed)
