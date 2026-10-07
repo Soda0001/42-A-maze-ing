@@ -148,8 +148,8 @@ class Maze:
             entry_row, entry_column = self.get_entry()
             exit_row, exit_column = self.get_exit()
 
-            file.write(f"\n{entry_row},{entry_column}\n")
-            file.write(f"{exit_row},{exit_column}\n")
+            file.write(f"\n{entry_column},{entry_row}\n")
+            file.write(f"{exit_column},{exit_row}\n")
 
     def is_42pattern_eligible(self) -> bool:
 
