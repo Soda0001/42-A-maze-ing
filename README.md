@@ -1,0 +1,8 @@
+REFS:
+https://youtu.be/ioUl1M77hww?si=eWyNgeHdpj4dhvwN
+https://youtu.be/zbXKcDVV4G0?si=qoSDc633kbXGzgWA
+https://youtu.be/powd-2TXj5g?si=Qlrzl--LZ8sq858R
+https://youtu.be/Y37-gB83HKE?si=tA9Wp_DnpuwyLa0W
+https://www.youtube.com/watch?v=KiCBXu4P-2Y
+https://www.youtube.com/watch?v=kgKa3axL_dM
+https://www.youtube.com/watch?v=V1oZQm1HtVw
