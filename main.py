@@ -2,7 +2,6 @@ import random
 
 from parsing_utils.parsing_utils import parse_config
 from generators.maze_generator import MazeGenerator
-from generators.maze_braider import make_pacman_maze
 from entities.maze import Maze
 from render.ascii import render
 
@@ -33,7 +32,10 @@ def create_random_maze(perfect: bool) -> Maze:
                 entry,
                 exit,
             )
-            MazeGenerator().generate_maze(maze, perfect)
+            MazeGenerator().generate_HandK_maze(
+                maze,
+                perfect,
+            )
 
         except (IndexError, ValueError):
             continue
@@ -63,7 +65,7 @@ def main() -> None:
         return
 
     maze_generator = MazeGenerator()
-    maze_generator.generate_maze(maze, config["PERFECT"])
+    maze_generator.generate_HandK_maze(maze)
 
     color_index = 0
     show_path = False
@@ -90,7 +92,10 @@ def main() -> None:
             maze = create_random_maze(True)
 
         elif choice == "2":
-            make_pacman_maze(maze)
+            maze_generator.generate_HandK_maze(
+                maze,
+                perfect=False,
+            )
 
         elif choice == "3":
             show_path = not show_path
