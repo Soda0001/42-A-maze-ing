@@ -77,13 +77,56 @@ class HuntAndKill:
                 if current_cell.is_visited() or current_cell.is_restricted():
                     continue
 
-                neighbours = maze.get_all_neighbours(current_cell)
-                visited_neighbours = maze.get_visited_neighbours(neighbours)
+                visited_neighbours = maze.get_visited_neighbours(current_cell)
 
                 if visited_neighbours:
                     return current_cell
 
         return None
+
+    def kill(self, maze: Maze, current_cell: Cell) -> None:
+        """Run the kill phase from the given cell.
+
+        Args:
+            maze: The maze to generate.
+            current_cell: The cell to start from.
+        """
+        current_cell.set_is_visited(True)
+
+        while True:
+            unvisited_neighbours = maze.get_unvisited_neighbours(current_cell)
+
+            if not unvisited_neighbours:
+                break
+
+            next_cell = self._random.choice(unvisited_neighbours)
+
+            self.carve_path(current_cell, next_cell)
+
+            current_cell = next_cell
+
+    def hunt_and_kill(self, maze: Maze, current_cell: Cell) -> None:
+        """Run the Hunt and Kill algorithm from a starting cell.
+
+        Args:
+            maze: The maze to generate.
+            current_cell: The cell to start from.
+        """
+        self.kill(maze, current_cell)
+
+        while True:
+            next_cell = self.get_unvis_cell_with_vis_neighbour(maze)
+
+            if not next_cell:
+                break
+
+            visited_neighbours = maze.get_visited_neighbours(next_cell)
+
+            current_cell = self._random.choice(visited_neighbours)
+
+            self.carve_path(current_cell, next_cell)
+
+            self.kill(maze, next_cell)
 
     def generate_maze(self, maze: Maze) -> None:
         """Generate a maze using the Hunt and Kill algorithm.
@@ -91,42 +134,12 @@ class HuntAndKill:
         Args:
             maze: The maze to generate.
         """
-        entry_row, entry_column = maze.get_entry()
-        entry_cell = maze.get_cells()[entry_row][entry_column]
-
-        restricted_cells = maze.get_restricted_cells()
-        if entry_cell in restricted_cells:
-            print("entry cannot be inside 42 pattern")
-            return
-
-        entry_cell.set_is_visited(True)
-
         while True:
-            if maze.get_unvisited_cell_count() == 18:
+            unvisited_cells = maze.get_unvisited_cells()
+
+            if not unvisited_cells:
                 break
 
-            unvisited_cell = self.get_unvis_cell_with_vis_neighbour(maze)
-            if unvisited_cell is None:
-                break
+            current_cell = self._random.choice(unvisited_cells)
 
-            all_neighbours = maze.get_all_neighbours(unvisited_cell)
-            visited_neighbours = maze.get_visited_neighbours(all_neighbours)
-
-            visited_neighbour = self._random.choice(visited_neighbours)
-            self.carve_path(visited_neighbour, unvisited_cell)
-
-            current_cell = unvisited_cell
-
-            while True:
-                all_neighbours = maze.get_all_neighbours(current_cell)
-                unvisited_neighbours = maze.get_unvisited_neighbours(
-                    all_neighbours
-                )
-
-                if not unvisited_neighbours:
-                    break
-
-                next_cell = self._random.choice(unvisited_neighbours)
-                self.carve_path(current_cell, next_cell)
-
-                current_cell = next_cell
+            self.hunt_and_kill(maze, current_cell)

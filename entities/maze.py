@@ -153,7 +153,7 @@ class Maze:
 
     def is_42pattern_eligible(self) -> bool:
 
-        if self.get_row() < 5 or self.get_column() < 7:
+        if self.get_row() < 7 or self.get_column() < 9:
             print("Too small to have '42' pattern")
             return False
         else:
