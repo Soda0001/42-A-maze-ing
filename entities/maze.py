@@ -130,7 +130,7 @@ class Maze:
         """Return the maze representation as a string."""
         representation = ""
 
-        for row in self._cells:
+        for row in self.get_cells():
             for cell in row:
                 representation += cell.get_representation()
             representation += "\n"
