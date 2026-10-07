@@ -1,6 +1,5 @@
 from entities.maze import Maze
 from generators.hunt_and_kill import HuntAndKill
-from generators.maze_braider import make_pacman_maze
 
 
 class MazeGenerator:
