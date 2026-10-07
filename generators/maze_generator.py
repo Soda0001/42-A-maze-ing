@@ -7,17 +7,18 @@ class MazeGenerator:
     """Generate mazes using a selected generation algorithm."""
 
     def __init__(self, seed: int | None = None):
-        self._hunt_and_kill = HuntAndKill(seed)
         self._seed = seed
 
-    def generate_maze(
+    def generate_HandK_maze(
             self,
             maze: Maze,
-            algorithm: bool
+            perfect: bool = True
     ) -> None:
-        """Generate a maze using the selected algorithm."""
-        if algorithm:
-            self._hunt_and_kill.generate_maze(maze)
-        else:
-            self._hunt_and_kill.generate_maze(maze)
-            make_pacman_maze(maze, self._seed)
+        """Generate a maze using the Hunt and Kill algorithm.
+
+        Args:
+            maze: The maze to generate.
+            perfect: Whether to generate a perfect maze.
+        """
+        hunt_and_kill = HuntAndKill(self._seed)
+        hunt_and_kill.generate_maze(maze, perfect)
