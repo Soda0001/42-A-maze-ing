@@ -4,6 +4,7 @@ from parsing_utils.parsing_utils import parse_config
 from generators.maze_generator import MazeGenerator
 from entities.maze import Maze
 from render.ascii import render
+from pathfinding.breadth_first_search import BreadthFirstSearch
 
 
 def create_random_maze(perfect: bool) -> Maze:
@@ -67,12 +68,17 @@ def main() -> None:
     maze_generator = MazeGenerator()
     maze_generator.generate_HandK_maze(maze)
 
+    bfs = BreadthFirstSearch()
+    shortest_path = bfs.find_shortest_path(maze)
+    shortest_path_str = bfs.path_to_directions(shortest_path)
+
     color_index = 0
     show_path = False
 
     while True:
         maze.write_to_file(config["OUTPUT_FILE"])
-        print(render(maze, "a", show_path, color_index))
+        bfs.write_to_file(config["OUTPUT_FILE"], shortest_path_str,)
+        print(render(maze, shortest_path_str, show_path, color_index))
 
         try:
             choice = input(
@@ -91,11 +97,17 @@ def main() -> None:
         if choice == "1":
             maze = create_random_maze(True)
 
+            shortest_path = bfs.find_shortest_path(maze)
+            shortest_path_str = bfs.path_to_directions(shortest_path)
+
         elif choice == "2":
             maze_generator.generate_HandK_maze(
                 maze,
                 perfect=False,
             )
+
+            shortest_path = bfs.find_shortest_path(maze)
+            shortest_path_str = bfs.path_to_directions(shortest_path)
 
         elif choice == "3":
             show_path = not show_path
