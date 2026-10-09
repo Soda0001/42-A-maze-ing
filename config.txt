@@ -1,8 +1,8 @@
-# Initializing maze
+# Initilaze the maze
 
 WIDTH=12
 HEIGHT=12
 ENTRY=00,00
-EXIT=10,10
+EXIT=10,02
 OUTPUT_FILE=maze.txt
 PERFECT=true
