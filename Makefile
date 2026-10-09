@@ -1,15 +1,21 @@
-PYTHON = python3
+PYTHON = .venv/bin/python
 MAIN = a_maze_ing.py
 CONFIG = config.txt
+VENV = .venv
+PIP = $(VENV)/bin/pip
 
 MYPY_FLAGS = --warn-return-any --warn-unused-ignores \
     --ignore-missing-imports --disallow-untyped-defs \
     --check-untyped-defs
 
-.PHONY: install run debug clean lint lint-strict
+.PHONY: install run debug clean lint lint-strict build
 
-install:
-	$(PYTHON) -m pip install -r requirements.txt
+venv:
+	python3 -m venv $(VENV)
+
+install: venv
+	$(PIP) install -r requirements.txt
+	$(PIP) install build
 
 run:
 	$(PYTHON) $(MAIN) $(CONFIG)
@@ -22,9 +28,12 @@ clean:
 	rm -rf .mypy_cache
 
 lint:
-	flake8 .
-	mypy . $(MYPY_FLAGS)
+	$(PYTHON) -m flake8 .
+	$(PYTHON) -m mypy . $(MYPY_FLAGS)
 
 lint-strict:
-	flake8 .
-	mypy . --strict
+	$(PYTHON) -m flake8 .
+	$(PYTHON) -m mypy . --strict
+
+build:
+	$(PYTHON) -m build
