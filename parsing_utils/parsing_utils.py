@@ -2,6 +2,8 @@ from constants.config_contents import CONFIG_CONTENTS
 import sys
 import typing
 
+Converter = typing.Callable[[str], typing.Any]
+
 
 def validate_file() -> None:
     """Validate that the input file has a .txt extension.
@@ -106,17 +108,17 @@ def validate_config_values(contents: dict[str, typing.Any]) -> None:
 
 def convert_tuple(value: str) -> tuple[int, int]:
     x, y = value.split(",", 1)
-    
+
     return int(x), int(y)
 
 
 def convert_boolean(value: str) -> bool:
     if value.lower() == "true":
         return True
-    
+
     if value.lower() == "false":
         return False
-    
+
     raise ValueError("Invalid boolean")
 
 
@@ -135,7 +137,7 @@ def convert_values(contents: dict[str, str]) -> dict[str, typing.Any]:
 
     converted_config: dict[str, typing.Any] = {}
 
-    converters = {
+    converters: dict[type, Converter] = {
         str: str,
         int: int,
         tuple: convert_tuple,
@@ -145,8 +147,7 @@ def convert_values(contents: dict[str, str]) -> dict[str, typing.Any]:
     for key, value in contents.items():
         expected_type = CONFIG_CONTENTS[key]
         converter = converters[expected_type]
-        value = converter(value)
-        converted_config[key] = value
+        converted_config[key] = converter(value)
 
     return converted_config
 

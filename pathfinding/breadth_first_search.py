@@ -109,12 +109,12 @@ class BreadthFirstSearch:
         if target not in visited:
             return []
 
-        path = []
-        current = target
+        path: list[Cell] = []
+        path_cell: Cell | None = target
 
-        while current is not None:
-            path.append(current)
-            current = parent[current]
+        while path_cell is not None:
+            path.append(path_cell)
+            path_cell = parent[path_cell]
 
         path.reverse()
 
