@@ -270,6 +270,7 @@ Comments can be included using ⁠ # ⁠.
 Example:
 
 ⁠ text
+
 # Maze configuration
 
 WIDTH=10
@@ -525,6 +526,45 @@ The project then progressed approximately as follows:
 During development, some architectural decisions evolved as we encountered new requirements.
 
 For example, the maze-generation architecture was kept flexible so that different algorithms could coexist rather than making the program dependent on a single generation algorithm.
+
+---
+
+## Reusable Maze Generator (`mazegen`)
+
+The project includes a reusable maze generation package named mazegen. It can be installed in another Python project using the provided wheel distribution.
+
+Installation
+pip install mazegen-1.0.0-py3-none-any.whl
+Basic Usage
+from mazegen import Maze, MazeGenerator, BreadthFirstSearch
+
+# Create a 10x10 maze with an entry and an exit.
+maze = Maze(10, 10, (0, 0), (9, 9))
+
+# Generate the maze with a fixed seed.
+generator = MazeGenerator(seed=42)
+generator.generate_HandK_maze(maze)
+
+# Retrieve the generated structure.
+cells = maze.get_cells()
+
+# Find a solution from entry to exit.
+solver = BreadthFirstSearch()
+solution = solver.find_shortest_path(maze)
+
+print("Maze size:", maze.get_row(), "x", maze.get_column())
+print("Solution:", solution)
+Custom Parameters
+Size: Pass the number of rows and columns to Maze(row, column, entry, exit).
+Entry and exit: Provide their coordinates as (row, column) tuples.
+Seed: Pass an integer to MazeGenerator(seed=42) to make generation reproducible under the same conditions.
+Generation mode: generate_HandK_maze(maze, perfect=True) generates a perfect maze by default. Set perfect=False to allow the generator's non-perfect mode.
+Accessing the Result
+maze.get_cells() returns the generated grid of cells.
+maze.get_entry() and maze.get_exit() return the entry and exit coordinates.
+solver.find_shortest_path(maze) returns a shortest path as a list of cells, or an empty list if no path is found.
+
+The package exposes Maze, MazeGenerator, BreadthFirstSearch, and Cell through the mazegen module.
 
 ---
 

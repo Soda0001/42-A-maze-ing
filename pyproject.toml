@@ -12,6 +12,7 @@ requires-python = ">=3.10"
 license = "MIT"
 
 [tool.setuptools]
+py-modules = ["mazegen"]
 packages = [
     "entities",
     "generators",
