@@ -485,6 +485,7 @@ Responsible for:
 •⁠  ⁠ASCII/terminal rendering
 •⁠  ⁠Pac-Man maze braiding algorithm
 •⁠  ⁠Makefile
+•⁠  ⁠Code Reusability
 
 ### Shared responsibilities
 
