@@ -2,7 +2,6 @@ import random
 
 from entities.maze import Maze
 from entities.cell import Cell
-from generators.maze_braider import make_pacman_maze
 
 
 class HuntAndKill:
@@ -33,21 +32,19 @@ class HuntAndKill:
         next_row = next_cell.get_row()
         next_column = next_cell.get_column()
 
-        if current_row == next_row - 1:
-            current_cell.set_south(False)
-            next_cell.set_north(False)
-
-        elif current_row == next_row + 1:
-            current_cell.set_north(False)
-            next_cell.set_south(False)
-
-        elif current_column == next_column - 1:
-            current_cell.set_east(False)
-            next_cell.set_west(False)
-
-        elif current_column == next_column + 1:
-            current_cell.set_west(False)
-            next_cell.set_east(False)
+        match (current_row - next_row, current_column - next_column):
+            case (-1, 0):
+                current_cell.set_south()
+                next_cell.set_north()
+            case (1, 0):
+                current_cell.set_north()
+                next_cell.set_south()
+            case (0, -1):
+                current_cell.set_east()
+                next_cell.set_west()
+            case (0, 1):
+                current_cell.set_west()
+                next_cell.set_east()
 
         current_cell.set_is_visited(True)
         next_cell.set_is_visited(True)
@@ -58,13 +55,11 @@ class HuntAndKill:
     def get_unvis_cell_with_vis_neighbour(
             self,
             maze: Maze,
-            look_at: tuple[int, int] = (0, 0)
     ) -> Cell | None:
         """Find an unvisited cell with a visited neighbour.
 
         Args:
             maze: The maze to search.
-            look_at: The row and column from which to start the search.
 
         Returns:
             An unvisited cell with a visited neighbour, or None if no
@@ -72,17 +67,16 @@ class HuntAndKill:
         """
         rows = maze.get_cells()
 
-        for row in range(look_at[0], len(rows)):
-            for column in range(look_at[1], len(rows[row])):
-                current_cell = maze.get_cells()[row][column]
+        for row in range(len(rows)):
+            for column in range(len(rows[row])):
+                current_cell = rows[row][column]
 
-                if current_cell.is_visited() or current_cell.is_restricted():
-                    continue
-
-                visited_neighbours = maze.get_visited_neighbours(current_cell)
-
-                if visited_neighbours:
-                    return current_cell
+                if (
+                    not current_cell.is_visited()
+                    and not current_cell.is_restricted()
+                ):
+                    if maze.get_visited_neighbours(current_cell):
+                        return current_cell
 
         return None
 
@@ -95,12 +89,9 @@ class HuntAndKill:
         """
         current_cell.set_is_visited(True)
 
-        while True:
-            unvisited_neighbours = maze.get_unvisited_neighbours(current_cell)
-
-            if not unvisited_neighbours:
-                break
-
+        while unvisited_neighbours := maze.get_unvisited_neighbours(
+            current_cell
+        ):
             next_cell = self._random.choice(unvisited_neighbours)
 
             self.carve_path(current_cell, next_cell)
@@ -116,11 +107,8 @@ class HuntAndKill:
         """
         self.kill(maze, current_cell)
 
-        while True:
-            next_cell = self.get_unvis_cell_with_vis_neighbour(maze)
-
-            if not next_cell:
-                break
+        while unvisited_cell := self.get_unvis_cell_with_vis_neighbour(maze):
+            next_cell = unvisited_cell
 
             visited_neighbours = maze.get_visited_neighbours(next_cell)
 
@@ -136,15 +124,7 @@ class HuntAndKill:
         Args:
             maze: The maze to generate.
         """
-        while True:
-            unvisited_cells = maze.get_unvisited_cells()
-
-            if not unvisited_cells:
-                break
-
+        while unvisited_cells := maze.get_unvisited_cells():
             current_cell = self._random.choice(unvisited_cells)
 
             self.hunt_and_kill(maze, current_cell)
-
-        if not perfect:
-            make_pacman_maze(maze, self._seed)

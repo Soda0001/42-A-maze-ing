@@ -107,20 +107,14 @@ def validate_config_values(contents: dict[str, typing.Any]) -> None:
 
 
 def convert_tuple(value: str) -> tuple[int, int]:
-    x, y = value.split(",", 1)
-
-    return int(x), int(y)
+    return tuple(map(int, value.split(",", 1)))
 
 
 def convert_boolean(value: str) -> bool:
-    if value.lower() == "true":
-        return True
+    if value.lower() not in ("true", "false"):
+        raise ValueError("Invalid boolean")
 
-    if value.lower() == "false":
-        return False
-
-    raise ValueError("Invalid boolean")
-
+    return value.lower() == "true"
 
 def convert_values(contents: dict[str, str]) -> dict[str, typing.Any]:
     """Convert configuration values to their expected Python types.
