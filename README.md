@@ -1,4 +1,4 @@
-This project has been created as part of the 42 curriculum by sedeniz, bakarsu.
+*This project has been created as part of the 42 curriculum by sedeniz, bakarsu.*
 
 # A-Maze-ing
 
@@ -486,7 +486,7 @@ Responsible for:
 •⁠  ⁠ASCII/terminal rendering
 •⁠  ⁠Pac-Man maze braiding algorithm
 •⁠  ⁠Makefile
-•⁠  ⁠Code Reusability
+•⁠  ⁠Code Reusability(Packaging)
 
 ### Shared responsibilities
 
