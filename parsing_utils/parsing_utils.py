@@ -4,6 +4,7 @@ import typing
 
 Converter = typing.Callable[[str], typing.Any]
 
+
 def validate_file() -> None:
     """Validate that the input file has a .txt extension.
 

@@ -2,7 +2,6 @@ import random
 
 from entities.maze import Maze
 from entities.cell import Cell
-from generators.maze_braider import transform_to_pacman_maze
 
 
 class HuntAndKill:
