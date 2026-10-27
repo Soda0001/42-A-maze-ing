@@ -105,7 +105,7 @@ class Maze:
 
         return visited_neighbours
 
-    def get_unvisited_cells(self):
+    def get_unvisited_cells(self) -> list[Cell]:
         unvisited_cells = []
 
         for row in self.get_cells():
@@ -121,7 +121,7 @@ class Maze:
 
         for row in self.get_cells():
             for cell in row:
-                if not cell.is_visited():
+                if not cell.is_visited() and not cell.is_restricted():
                     count += 1
 
         return count
@@ -154,7 +154,7 @@ class Maze:
     def is_42pattern_eligible(self) -> bool:
 
         if self.get_row() < 7 or self.get_column() < 9:
-            print("Too small to have '42' pattern")
+            print("\n***** Too small to have '42' pattern *****\n")
             return False
         else:
             return True
@@ -175,25 +175,20 @@ class Maze:
         mid_row, mid_column = self.get_mid_left_corner_coor()
         cells = self.get_cells()
 
-        cells[mid_row][mid_column].set_is_restricted(True)
-        cells[mid_row + 1][mid_column].set_is_restricted(True)
-        cells[mid_row + 2][mid_column].set_is_restricted(True)
-        cells[mid_row + 2][mid_column + 1].set_is_restricted(True)
-        cells[mid_row + 2][mid_column + 2].set_is_restricted(True)
-        cells[mid_row + 3][mid_column + 2].set_is_restricted(True)
-        cells[mid_row + 4][mid_column + 2].set_is_restricted(True)
+        pattern = (
+            "1010111",
+            "1010001",
+            "1110111",
+            "0010100",
+            "0010111",
+        )
 
-        cells[mid_row][mid_column + 4].set_is_restricted(True)
-        cells[mid_row][mid_column + 5].set_is_restricted(True)
-        cells[mid_row][mid_column + 6].set_is_restricted(True)
-        cells[mid_row + 1][mid_column + 6].set_is_restricted(True)
-        cells[mid_row + 2][mid_column + 4].set_is_restricted(True)
-        cells[mid_row + 2][mid_column + 5].set_is_restricted(True)
-        cells[mid_row + 2][mid_column + 6].set_is_restricted(True)
-        cells[mid_row + 3][mid_column + 4].set_is_restricted(True)
-        cells[mid_row + 4][mid_column + 4].set_is_restricted(True)
-        cells[mid_row + 4][mid_column + 5].set_is_restricted(True)
-        cells[mid_row + 4][mid_column + 6].set_is_restricted(True)
+        for row_offset, pattern_row in enumerate(pattern):
+            for column_offset, marked in enumerate(pattern_row):
+                if marked == "1":
+                    cells[mid_row + row_offset][
+                        mid_column + column_offset
+                    ].set_is_restricted()
 
     def get_restricted_cells(self) -> list[Cell]:
         """Return all restricted cells in the maze."""
