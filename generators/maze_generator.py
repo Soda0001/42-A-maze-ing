@@ -1,5 +1,6 @@
 from entities.maze import Maze
 from generators.hunt_and_kill import HuntAndKill
+from generators.maze_braider import transform_to_pacman_maze
 
 
 class MazeGenerator:
@@ -21,3 +22,5 @@ class MazeGenerator:
         """
         hunt_and_kill = HuntAndKill(self._seed)
         hunt_and_kill.generate_maze(maze, perfect)
+        if not perfect:
+            transform_to_pacman_maze(maze, self._seed)
