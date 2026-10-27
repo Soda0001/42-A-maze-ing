@@ -478,6 +478,7 @@ Responsible for:
 •⁠  ⁠Hunt and Kill maze-generation algorithm
 •⁠  ⁠Breadth-First Search pathfinding algorithm
 •⁠  ⁠Configuration parsing
+•  Refactoring
 
 ### bakarsu
 
