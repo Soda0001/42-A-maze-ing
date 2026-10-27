@@ -2,6 +2,7 @@ from constants.config_contents import CONFIG_CONTENTS
 import sys
 import typing
 
+Converter = typing.Callable[[str], typing.Any]
 
 def validate_file() -> None:
     """Validate that the input file has a .txt extension.
@@ -132,6 +133,7 @@ def convert_values(contents: dict[str, str]) -> dict[str, typing.Any]:
     Raises:
         ValueError: If a configuration value is invalid.
     """
+    converters: dict[type, Converter] = {}
 
     converted_config: dict[str, typing.Any] = {}
 
@@ -145,8 +147,7 @@ def convert_values(contents: dict[str, str]) -> dict[str, typing.Any]:
     for key, value in contents.items():
         expected_type = CONFIG_CONTENTS[key]
         converter = converters[expected_type]
-        value = converter(value)
-        converted_config[key] = value
+        converted_config[key] = converter(value)
 
     return converted_config
 
