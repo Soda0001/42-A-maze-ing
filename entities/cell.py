@@ -25,25 +25,25 @@ class Cell:
     def get_west(self) -> bool:
         return self._west
 
-    def set_west(self, west: bool) -> None:
+    def set_west(self, west: bool = False) -> None:
         self._west = west
 
     def get_south(self) -> bool:
         return self._south
 
-    def set_south(self, south: bool) -> None:
+    def set_south(self, south: bool = False) -> None:
         self._south = south
 
     def get_east(self) -> bool:
         return self._east
 
-    def set_east(self, east: bool) -> None:
+    def set_east(self, east: bool = False) -> None:
         self._east = east
 
     def get_north(self) -> bool:
         return self._north
 
-    def set_north(self, north: bool) -> None:
+    def set_north(self, north: bool = False) -> None:
         self._north = north
 
     def is_visited(self) -> bool:
@@ -64,7 +64,7 @@ class Cell:
     def is_restricted(self) -> int:
         return self._is_restricted
 
-    def set_is_restricted(self, restriction: bool) -> None:
+    def set_is_restricted(self, restriction: bool = True) -> None:
         self._is_restricted = restriction
 
     def get_bits(self) -> tuple[int, int, int, int]:
