@@ -153,7 +153,7 @@ def would_create_3x3(
     return False
 
 
-def make_pacman_maze(
+def transform_to_pacman_maze(
         maze: Maze,
         seed: int | None = None
 ) -> None:
