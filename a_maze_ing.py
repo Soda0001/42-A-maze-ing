@@ -7,21 +7,37 @@ from render.ascii import render
 from pathfinding.breadth_first_search import BreadthFirstSearch
 
 
-def create_random_maze(perfect: bool) -> Maze:
-    """Create a random maze with valid entry and exit coordinates."""
-    while True:
-        width = random.randint(3, 50)
-        height = random.randint(3, 50)
+def get_random_maze_parameters(
+) -> tuple[int, int, tuple[int, int], tuple[int, int]]:
+    """Generate random dimensions and distinct entry/exit coordinates."""
+    width = random.randint(3, 50)
+    height = random.randint(3, 50)
 
-        entry = (
-            random.randint(0, height - 1),
-            random.randint(0, width - 1),
-        )
+    entry = (
+        random.randint(0, height - 1),
+        random.randint(0, width - 1),
+    )
+    exit = (
+        random.randint(0, height - 1),
+        random.randint(0, width - 1),
+    )
 
+    while entry == exit:
         exit = (
             random.randint(0, height - 1),
             random.randint(0, width - 1),
         )
+
+        if entry == exit:
+            continue
+
+    return width, height, entry, exit
+
+
+def create_maze(perfect: bool) -> Maze:
+    """Create a random maze with valid entry and exit coordinates."""
+    while True:
+        width, height, entry, exit = get_random_maze_parameters()
 
         if entry == exit:
             continue
@@ -45,14 +61,10 @@ def create_random_maze(perfect: bool) -> Maze:
 
 
 def main() -> None:
-    try:
-        config = parse_config()
-    except Exception as e:
-        print(e)
-        return None
+    config = parse_config()
 
     if not config:
-        return None
+        return
 
     try:
         maze = Maze(
@@ -95,7 +107,7 @@ def main() -> None:
             break
 
         if choice == "1":
-            maze = create_random_maze(True)
+            maze = create_maze(True)
 
             shortest_path = bfs.find_shortest_path(maze)
             shortest_path_str = bfs.path_to_directions(shortest_path)
