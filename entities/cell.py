@@ -100,13 +100,12 @@ class Cell:
         return bits
 
     def get_open_walls(self) -> list[int]:
-        """Return a list of indices representing open walls."""
         open_walls = []
         walls = self.get_bits()
 
-        for index, wall in enumerate(walls):
+        for wall in walls:
             if wall == 0:
-                open_walls.append(index)
+                open_walls.append(wall)
 
         return open_walls
 
