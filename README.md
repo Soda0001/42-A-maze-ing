@@ -471,7 +471,7 @@ a-maze-ing/
 │   ├── __init__.py
 │   └── ascii.py
 │
-├── amazeing.py
+├── a_maze_ing.py
 ├── config.txt
 ├── LICENSE.md
 ├── Makefile
