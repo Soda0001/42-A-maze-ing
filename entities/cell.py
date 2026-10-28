@@ -76,13 +76,13 @@ class Cell:
         bits = int(west), int(south), int(east), int(north)
         return bits
 
-    def get_open_walls(self) -> list:
+    def get_open_walls(self) -> list[int]:
         open_walls = []
-
-        walls = self.get_bits()
-        for wall in walls:
+        walls = self.get_bits()  # (west, south, east, north) -> (0, 1, 2, 3)
+        
+        for index, wall in enumerate(walls):
             if wall == 0:
-                open_walls.append(wall)
+                open_walls.append(index)
 
         return open_walls
 
