@@ -107,10 +107,12 @@ def validate_config_values(contents: dict[str, typing.Any]) -> None:
 
 
 def convert_tuple(value: str) -> tuple[int, ...]:
+    """Convert a comma-separated string into a tuple of integers."""
     return tuple(map(int, value.split(",", 1)))
 
 
 def convert_boolean(value: str) -> bool:
+    """Convert a string representation of a boolean into a boolean value."""
     if value.lower() not in ("true", "false"):
         raise ValueError("Invalid boolean")
 

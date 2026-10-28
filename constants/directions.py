@@ -1,0 +1,6 @@
+DIRECTIONS = {
+    "west": (0, -1),
+    "south": (+1, 0),
+    "east": (0, +1),
+    "north": (-1, 0)
+}

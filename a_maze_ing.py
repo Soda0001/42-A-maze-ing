@@ -61,6 +61,8 @@ def create_maze(perfect: bool) -> Maze:
 
 
 def main() -> None:
+    """Run the main interactive terminal loop
+    for the A-maze-ing application."""
     config = parse_config()
 
     if not config:
@@ -89,7 +91,10 @@ def main() -> None:
 
     while True:
         maze.write_to_file(config["OUTPUT_FILE"])
-        bfs.write_to_file(config["OUTPUT_FILE"], shortest_path_str,)
+        bfs.write_to_file(
+            config["OUTPUT_FILE"],
+            shortest_path_str,
+        )
         print(render(maze, shortest_path_str, show_path, color_index))
 
         try:
