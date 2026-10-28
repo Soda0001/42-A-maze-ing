@@ -130,7 +130,10 @@ make lint-strict
 This runs:
 
 ⁠ bash
-flake8 .
+flake8 --exclude=
+    .venv,build,dist,.git,
+    __pycache__,.mypy_cache,*.egg-info
+
 mypy . --strict
  ⁠
 
