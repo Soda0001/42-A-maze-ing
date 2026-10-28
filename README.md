@@ -112,7 +112,10 @@ make lint
 This runs:
 
 ⁠ bash
-flake8 .
+flake8 --exclude=
+    .venv,build,dist,.git,
+    __pycache__,.mypy_cache,*.egg-info
+
 mypy . --warn-return-any --warn-unused-ignores \
     --ignore-missing-imports --disallow-untyped-defs \
     --check-untyped-defs
@@ -167,7 +170,7 @@ cd a-maze-ing
 The project can be run using:
 
 ⁠ bash
-python3 main.py config.txt
+python3 a_maze_ing.py config.txt
  ⁠
 
 or, if using the provided Makefile:
@@ -435,31 +438,47 @@ This separation allows different generation algorithms to use the same renderer.
 
 The project is divided into several components:
 
-⁠ text
 a-maze-ing/
 │
+├── constants/
+│   ├── __init__.py
+│   └── config_contents.py
+│
+├── dist/
+│   ├── mazegen-1.0.0-py3-none-any.whl
+│   └── mazegen-1.0.0.tar.gz
+│
 ├── entities/
+│   ├── __init__.py
 │   ├── cell.py
 │   └── maze.py
 │
 ├── generators/
+│   ├── __init__.py
 │   ├── maze_generator.py
 │   ├── hunt_and_kill.py
 │   └── maze_braider.py
 │
 ├── parsing_utils/
+│   ├── __init__.py
 │   └── parsing_utils.py
 │
 ├── pathfinding/
-│   └── bfs.py
+│   ├── __init__.py
+│   └── breadth_first_search.py
 │
 ├── render/
+│   ├── __init__.py
 │   └── ascii.py
 │
-├── main.py
-├── Makefile
+├── amazeing.py
 ├── config.txt
-└── README.md
+├── LICENSE.md
+├── Makefile
+├── mazegen.py
+├── pyproject.toml
+├── README.md
+└── requirements.txt
  ⁠
 
 The exact structure may evolve as the project develops.
@@ -484,10 +503,12 @@ Responsible for:
 
 Responsible for:
 
-•⁠  ⁠ASCII/terminal rendering
 •⁠  ⁠Pac-Man maze braiding algorithm
+•⁠  ⁠ASCII/terminal rendering
 •⁠  ⁠Makefile
 •⁠  ⁠Code Reusability(Packaging)
+•⁠  Readme and Licensing
+•  Refactoring
 
 ### Shared responsibilities
 
