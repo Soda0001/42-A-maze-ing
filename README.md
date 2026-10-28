@@ -478,6 +478,7 @@ a-maze-ing/
 ├── config.txt
 ├── LICENSE.md
 ├── Makefile
+├── mazegen-1.0.0-py3-none-any.whl
 ├── mazegen.py
 ├── pyproject.toml
 ├── README.md
