@@ -68,6 +68,7 @@ class Cell:
         self._is_restricted = restriction
 
     def get_bits(self) -> tuple[int, int, int, int]:
+        """Return a tuple of integer representations of west, south, east, and north walls."""
         west = self.get_west()
         south = self.get_south()
         east = self.get_east()
