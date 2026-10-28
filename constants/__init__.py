@@ -1,4 +1,3 @@
 __all__ = [
-    "config_contents",
-    "directions"
+    "config_contents"
 ]
