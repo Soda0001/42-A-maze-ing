@@ -22,16 +22,6 @@ STEP = {
 }
 
 
-MENU = (
-    "=== A-Maze-ing ===\n"
-    "1. Re-generate a new maze\n"
-    "2. Show / Hide the shortest path\n"
-    "3. Rotate the wall colours\n"
-    "4. Quit\n"
-    "Choice? (1-4): "
-)
-
-
 def block(color: int | None) -> str:
     """Return one square block (2 characters wide)."""
     if color is None:
