@@ -1,8 +1,7 @@
-from constants.config_contents import CONFIG_CONTENTS, OPTIONAL_CONTENTS
+from constants.config_contents import CONFIG_CONTENTS
 import sys
 import typing
 
-ALL_CONTENTS = {**CONFIG_CONTENTS, **OPTIONAL_CONTENTS}
 Converter = typing.Callable[[str], typing.Any]
 
 
@@ -88,7 +87,7 @@ def validate_config_keys(contents: dict[str, str]) -> None:
     """
 
     for key in contents:
-        if key not in ALL_CONTENTS:
+        if key not in CONFIG_CONTENTS:
             raise ValueError(f"Invalid key in config: {key}")
 
 
@@ -103,7 +102,7 @@ def validate_config_values(contents: dict[str, typing.Any]) -> None:
     """
 
     for key, value in contents.items():
-        if not isinstance(value, ALL_CONTENTS[key]):
+        if not isinstance(value, CONFIG_CONTENTS[key]):
             raise ValueError(f"Invalid value for {key}")
 
 
@@ -144,7 +143,7 @@ def convert_values(contents: dict[str, str]) -> dict[str, typing.Any]:
     }
 
     for key, value in contents.items():
-        expected_type = ALL_CONTENTS[key]
+        expected_type = CONFIG_CONTENTS[key]
         converter = converters[expected_type]
         converted_config[key] = converter(value)
 
