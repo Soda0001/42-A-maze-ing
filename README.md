@@ -121,22 +121,6 @@ mypy . --warn-return-any --warn-unused-ignores \
     --check-untyped-defs
  ⁠
 
-For stricter type checking:
-
-⁠ bash
-make lint-strict
- ⁠
-
-This runs:
-
-⁠ bash
-flake8 --exclude=
-    .venv,build,dist,.git,
-    __pycache__,.mypy_cache,*.egg-info
-
-mypy . --strict
- ⁠
-
 ### Cleaning generated files
 
 To remove Python cache directories and the mypy cache:
@@ -474,11 +458,12 @@ a-maze-ing/
 │   ├── __init__.py
 │   └── ascii.py
 │
-├── a_maze_ing.py
+├── .flake8
+├── amazeing.py
 ├── config.txt
+├── config_contents.py
 ├── LICENSE.md
 ├── Makefile
-├── mazegen-1.0.0-py3-none-any.whl
 ├── mazegen.py
 ├── pyproject.toml
 ├── README.md
