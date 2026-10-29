@@ -4,9 +4,6 @@ CONFIG_CONTENTS = {
     "ENTRY": tuple,
     "EXIT": tuple,
     "OUTPUT_FILE": str,
-    "PERFECT": bool
-}
-
-OPTIONAL_CONTENTS = {
-    "SEED": int,
+    "PERFECT": bool,
+    "SEED": int
 }
