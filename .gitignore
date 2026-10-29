@@ -4,18 +4,10 @@ __pycache__/
 *.egg-info/
 .mypy_cache/
 .pytest_cache/
-
-# Sanal ortam
 .venv/
 venv/
-
-# Paketleme çıktıları (build klasörleri)
 build/
-
-# Üretilen çıktılar
 maze.txt
-run1.txt
-
-# Editör / sistem
 .vscode/
 .DS_Store
+reusage.py
