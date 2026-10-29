@@ -4,7 +4,6 @@ CONFIG = config.txt
 VENV = .venv
 PIP = $(VENV)/bin/pip
 
-FLAKE8_FLAGS = --exclude=.venv,build,dist,.git,__pycache__,.mypy_cache,*.egg-info
 MYPY_FLAGS = --warn-return-any --warn-unused-ignores \
     --ignore-missing-imports --disallow-untyped-defs \
     --check-untyped-defs \
