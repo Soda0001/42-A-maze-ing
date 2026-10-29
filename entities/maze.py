@@ -166,8 +166,8 @@ class Maze:
             entry_row, entry_column = self.get_entry()
             exit_row, exit_column = self.get_exit()
 
-            file.write(f"\n{entry_column},{entry_row} #entry (x,y)\n")
-            file.write(f"{exit_column},{exit_row}  #exit (x,y)\n")
+            file.write(f"\n{entry_column},{entry_row}\n")
+            file.write(f"{exit_column},{exit_row}\n")
 
     def is_42pattern_eligible(self) -> bool:
         """Check if maze dimensions are large enough for the '42' pattern."""
@@ -196,7 +196,7 @@ class Maze:
         cells = self.get_cells()
 
         pattern = (
-            "1000111",
+            "1010111",
             "1010001",
             "1110111",
             "0010100",

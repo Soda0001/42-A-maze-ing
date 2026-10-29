@@ -1,7 +1,8 @@
-from constants.config_contents import CONFIG_CONTENTS
+from constants.config_contents import CONFIG_CONTENTS, OPTIONAL_CONTENTS
 import sys
 import typing
 
+ALL_CONTENTS = {**CONFIG_CONTENTS, **OPTIONAL_CONTENTS}
 Converter = typing.Callable[[str], typing.Any]
 
 
@@ -25,7 +26,7 @@ def validate_argument_count() -> None:
     if len(sys.argv) != 2:
         raise ValueError(
             "Invalid usage - Expected usage is: "
-            "python3 a-maze-ing config.txt"
+            "python3 a_maze_ing.py config.txt"
         )
 
 
@@ -87,7 +88,7 @@ def validate_config_keys(contents: dict[str, str]) -> None:
     """
 
     for key in contents:
-        if key not in CONFIG_CONTENTS:
+        if key not in ALL_CONTENTS:
             raise ValueError(f"Invalid key in config: {key}")
 
 
@@ -102,7 +103,7 @@ def validate_config_values(contents: dict[str, typing.Any]) -> None:
     """
 
     for key, value in contents.items():
-        if not isinstance(value, CONFIG_CONTENTS[key]):
+        if not isinstance(value, ALL_CONTENTS[key]):
             raise ValueError(f"Invalid value for {key}")
 
 
@@ -143,7 +144,7 @@ def convert_values(contents: dict[str, str]) -> dict[str, typing.Any]:
     }
 
     for key, value in contents.items():
-        expected_type = CONFIG_CONTENTS[key]
+        expected_type = ALL_CONTENTS[key]
         converter = converters[expected_type]
         converted_config[key] = converter(value)
 
@@ -161,8 +162,8 @@ def parse_config() -> dict[str, typing.Any]:
     """
 
     try:
-        validate_file()
         validate_argument_count()
+        validate_file()
         config = read_config()
         validate_config_keys(config)
         validate_mandatory_keys(config)

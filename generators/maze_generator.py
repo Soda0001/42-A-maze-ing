@@ -8,19 +8,14 @@ class MazeGenerator:
 
     def __init__(self, seed: int | None = None):
         self._seed = seed
+        self._hunt_and_kill = HuntAndKill(seed)
 
     def generate_HandK_maze(
             self,
             maze: Maze,
             perfect: bool = True
     ) -> None:
-        """Generate a maze using the Hunt and Kill algorithm.
-
-        Args:
-            maze: The maze to generate.
-            perfect: Whether to generate a perfect maze.
-        """
-        hunt_and_kill = HuntAndKill(self._seed)
-        hunt_and_kill.generate_maze(maze, perfect)
+        """Generate a maze using the Hunt and Kill algorithm."""
+        self._hunt_and_kill.generate_maze(maze, perfect)
         if not perfect:
             transform_to_pacman_maze(maze, self._seed)

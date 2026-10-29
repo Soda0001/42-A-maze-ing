@@ -30,12 +30,8 @@ clean:
 	rm -rf .mypy_cache
 
 lint:
-	$(PYTHON) -m flake8 $(FLAKE8_FLAGS) .
+	$(PYTHON) -m flake8 .
 	$(PYTHON) -m mypy . $(MYPY_FLAGS)
-
-lint-strict:
-	$(PYTHON) -m flake8 $(FLAKE8_FLAGS) .
-	$(PYTHON) -m mypy . --strict
 
 build:
 	$(PYTHON) -m build

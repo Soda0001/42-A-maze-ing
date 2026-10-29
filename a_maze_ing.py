@@ -1,4 +1,4 @@
-import random
+from typing import Any
 
 from parsing_utils.parsing_utils import parse_config
 from generators.maze_generator import MazeGenerator
@@ -7,136 +7,74 @@ from render.ascii import render
 from pathfinding.breadth_first_search import BreadthFirstSearch
 
 
-def get_random_maze_parameters(
-) -> tuple[int, int, tuple[int, int], tuple[int, int]]:
-    """Generate random dimensions and distinct entry/exit coordinates."""
-    width = random.randint(3, 50)
-    height = random.randint(3, 50)
+def create_maze(
+        config: dict[str, Any],
+        generator: MazeGenerator,
+) -> Maze:
+    """Create and generate a maze that follows the configuration."""
+    entry_x, entry_y = config["ENTRY"]
+    exit_x, exit_y = config["EXIT"]
 
-    entry = (
-        random.randint(0, height - 1),
-        random.randint(0, width - 1),
+    maze = Maze(
+        config["HEIGHT"],
+        config["WIDTH"],
+        (entry_y, entry_x),
+        (exit_y, exit_x),
     )
-    exit = (
-        random.randint(0, height - 1),
-        random.randint(0, width - 1),
-    )
+    generator.generate_HandK_maze(maze, config["PERFECT"])
 
-    while entry == exit:
-        exit = (
-            random.randint(0, height - 1),
-            random.randint(0, width - 1),
-        )
-
-        if entry == exit:
-            continue
-
-    return width, height, entry, exit
-
-
-def create_maze(perfect: bool) -> Maze:
-    """Create a random maze with valid entry and exit coordinates."""
-    while True:
-        width, height, entry, exit = get_random_maze_parameters()
-
-        if entry == exit:
-            continue
-
-        try:
-            maze = Maze(
-                height,
-                width,
-                entry,
-                exit,
-            )
-            MazeGenerator().generate_HandK_maze(
-                maze,
-                perfect,
-            )
-
-        except (IndexError, ValueError):
-            continue
-
-        return maze
+    return maze
 
 
 def main() -> None:
-    """Run the main interactive terminal loop
-    for the A-maze-ing application."""
+    """Run the interactive terminal loop of A-maze-ing."""
     config = parse_config()
 
     if not config:
         return
 
+    generator = MazeGenerator(config.get("SEED"))
+    bfs = BreadthFirstSearch()
+
     try:
-        maze = Maze(
-            config["HEIGHT"],
-            config["WIDTH"],
-            config["ENTRY"],
-            config["EXIT"],
-        )
+        maze = create_maze(config, generator)
     except (ValueError, IndexError) as error:
         print(f"Invalid maze: {error}")
         return
 
-    maze_generator = MazeGenerator()
-    maze_generator.generate_HandK_maze(maze)
-
-    bfs = BreadthFirstSearch()
-    shortest_path = bfs.find_shortest_path(maze)
-    shortest_path_str = bfs.path_to_directions(shortest_path)
-
+    path = bfs.path_to_directions(bfs.find_shortest_path(maze))
     color_index = 0
     show_path = False
 
     while True:
         maze.write_to_file(config["OUTPUT_FILE"])
-        bfs.write_to_file(
-            config["OUTPUT_FILE"],
-            shortest_path_str,
-        )
-        print(render(maze, shortest_path_str, show_path, color_index))
+        bfs.write_to_file(config["OUTPUT_FILE"], path)
+        print(render(maze, path, show_path, color_index))
 
         try:
             choice = input(
                 "\n=== A-maze-ing ==="
-                "\n1. Regenerate a new random maze"
-                "\n2. Turn into pacman maze"
-                "\n3. Show / Hide the shortest path"
-                "\n4. Rotate the wall colours"
-                "\n5. Quit"
-                "\nChoice? (1-5): "
+                "\n1. Re-generate a new maze"
+                "\n2. Show / Hide the shortest path"
+                "\n3. Rotate the wall colours"
+                "\n4. Quit"
+                "\nChoice? (1-4): "
             )
         except (EOFError, KeyboardInterrupt):
             print()
             break
 
         if choice == "1":
-            maze = create_maze(True)
-
-            shortest_path = bfs.find_shortest_path(maze)
-            shortest_path_str = bfs.path_to_directions(shortest_path)
-
+            maze = create_maze(config, generator)
+            path = bfs.path_to_directions(bfs.find_shortest_path(maze))
         elif choice == "2":
-            maze_generator.generate_HandK_maze(
-                maze,
-                perfect=False,
-            )
-
-            shortest_path = bfs.find_shortest_path(maze)
-            shortest_path_str = bfs.path_to_directions(shortest_path)
-
-        elif choice == "3":
             show_path = not show_path
-
-        elif choice == "4":
+        elif choice == "3":
             color_index += 1
-
-        elif choice == "5":
+        elif choice == "4":
             break
-
         else:
-            print("Invalid choice, please enter a number from 1 to 5.")
+            print("Invalid choice, please enter a number from 1 to 4.")
 
 
 if __name__ == "__main__":

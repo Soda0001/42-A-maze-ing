@@ -6,3 +6,7 @@ CONFIG_CONTENTS = {
     "OUTPUT_FILE": str,
     "PERFECT": bool
 }
+
+OPTIONAL_CONTENTS = {
+    "SEED": int,
+}
