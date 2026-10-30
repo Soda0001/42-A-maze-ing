@@ -5,16 +5,6 @@ import typing
 Converter = typing.Callable[[str], typing.Any]
 
 
-def validate_file() -> None:
-    """Validate that the input file has a .txt extension.
-
-    Raises:
-        OSError: If the input file does not have a .txt extension.
-    """
-    if not sys.argv[1].endswith(".txt"):
-        raise OSError("[Errno 2] No such file or directory:")
-
-
 def validate_argument_count() -> None:
     """Validate that exactly one command-line argument is provided.
 
@@ -162,7 +152,6 @@ def parse_config() -> dict[str, typing.Any]:
 
     try:
         validate_argument_count()
-        validate_file()
         config = read_config()
         validate_config_keys(config)
         validate_mandatory_keys(config)
