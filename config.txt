@@ -4,6 +4,6 @@ WIDTH=24
 HEIGHT=24
 ENTRY=0,0
 EXIT=10,2
-OUTPUT_FILE=maze.txt
+OUTPUT_FILE=output_maze.txt
 PERFECT=false
 SEED=42
